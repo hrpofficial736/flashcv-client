@@ -1,10 +1,12 @@
 import React from "react";
+import { Route, Routes } from "react-router";
+import { LandingPage } from "./exports/components/exports";
 
 const App: React.FC = () => {
   return (
-    <main>
-      <h1>Hello</h1>
-    </main>
+    <Routes>
+      <Route element={<LandingPage />} path="/" />
+    </Routes>
   );
 };
 
