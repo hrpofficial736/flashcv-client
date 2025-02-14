@@ -5,7 +5,7 @@ import {
   Editing,
   PdfLogo,
 } from "../exports/assets/exports";
-import { GridTile } from "./GridTile";
+import { FeaturesTile } from "./FeaturesTile";
 import { motion } from "motion/react";
 
 export const Features: React.FC = () => {
@@ -39,22 +39,22 @@ export const Features: React.FC = () => {
         minutes!
       </p>
       <div className="w-[80%] h-[70%] mt-2 px-3 py-2 flex justify-center items-center gap-x-5">
-        <GridTile
+        <FeaturesTile
           image={AIImage}
           text="AI Powered suggestions"
           caption="Get smart content recommendations for a polished resume."
         />
-        <GridTile
+        <FeaturesTile
           image={Templates}
           text="Beautiful Templates"
           caption="Choose from a variety of professional, modern designs."
         />
-        <GridTile
+        <FeaturesTile
           image={Editing}
           text="Real-Time Editing"
           caption="Customize sections and see instant updates as you go."
         />
-        <GridTile
+        <FeaturesTile
           image={PdfLogo}
           text="Instant PDF Download"
           caption="Download your resume as a polished PDF with a single click."

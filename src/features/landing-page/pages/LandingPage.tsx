@@ -1,12 +1,20 @@
 import React from "react";
-import { Hero, Features, HowItWorks } from "../exports/components/exports";
+import {
+  Hero,
+  Features,
+  HowItWorks,
+  CallToAction,
+  Footer,
+} from "../exports/components/exports";
 
 export const LandingPage: React.FC = () => {
   return (
-    <main>
+    <main className="w-screen h-screen">
       <Hero />
       <Features />
       <HowItWorks />
+      <CallToAction />
+      <Footer />
     </main>
   );
 };
