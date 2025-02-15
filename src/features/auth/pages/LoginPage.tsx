@@ -1,9 +1,11 @@
 import React from "react";
+import {LoginComponent, ImageSection} from "../exports/components/exports";
 
 export const LoginPage: React.FC = () => {
   return (
-    <main>
-      <h1>Hello</h1>
+    <main className="w-screen h-screen flex">
+      <LoginComponent />
+      <ImageSection />
     </main>
   );
 };

@@ -1,27 +1,39 @@
-import React from "react";
-import { Resume1, Resume2, Resume3, Resume4 } from "../exports/assets/exports";
+import React, { useEffect, useState } from "react";
+import { Resume1, Resume2, Resume3, Resume4 } from "../../../exports/assets/exports";
 import { motion } from "motion/react";
 import { UniversalButton } from "../../../components/UniversalButton";
 import { FaRocket } from "react-icons/fa6";
 import { Logo } from "../../../exports/assets/exports";
 
 export const Hero: React.FC = () => {
+  const [displayImages, setDisplayImages] = useState<boolean>(
+    window.innerWidth > 1024
+  );
+  useEffect(() => {
+    const handleResize = () => {
+      setDisplayImages(window.innerWidth > 1024);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
-    <main className="font-poppins relative px-3 py-3 lg:px-40 lg:py-10 flex flex-col items-center justify-end lg:column-center-flex gap-y-3 w-full h-[50%] lg:w-screen lg:h-[100vh] bg-gradient-to-b from-orange-50 to-orange-400 rounded-bl-3xl rounded-br-3xl">
+    <section className="w-full h-[40%] lg:h-full px-7 py-5 rounded-bl-3xl rounded-br-3xl bg-gradient-to-b from-orange-50 to-orange-300 flex flex-col items-center justify-end lg:justify-center">
       <img
         src={Logo}
-        className="absolute top-2 left-2 lg:top-5 lg:left-10"
-        width={window.innerWidth > 1024 ? 150 : 80}
-        height={window.innerWidth > 1024 ? 150 : 80}
+        className={`absolute top-4 left-3 lg:top-5 lg:left-10 ${
+          displayImages ? "w-[140px] h-[40px]" : "w-[110px] h-[30px]"
+        }`}
       />
-      {/* <div className="z-20">
+      <div className="z-20">
         <motion.h1
           initial={{ opacity: 0, y: 100 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
           className="text-2xl lg:text-7xl font-bold font-poppins text-black text-center"
         >
-          Create Your Resume in a Fla🗲h
+          Create Your Resume in a Fla⚡h
         </motion.h1>
         <motion.h1
           initial={{ opacity: 0, y: 100 }}
@@ -34,7 +46,7 @@ export const Hero: React.FC = () => {
           just a few clicks!
         </motion.h1>
       </div>
-      {window.innerWidth > 1024 && (
+      {displayImages && (
         <>
           <motion.img
             src={Resume1}
@@ -74,7 +86,7 @@ export const Hero: React.FC = () => {
           />
         </>
       )}
-      <UniversalButton text="Get Started" icon={<FaRocket />} /> */}
-    </main>
+      <UniversalButton text="Get Started" icon={<FaRocket />} />
+    </section>
   );
 };

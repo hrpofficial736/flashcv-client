@@ -26,19 +26,19 @@ export const Features: React.FC = () => {
         duration: 2,
         type: "spring",
       }}
-      className="px-10 py-5 mt-10 mx-2 bg-white/40 h-[550px] rounded-2xl column-center-flex gap-y-5"
+      className="w-full px-3 py-2 lg:px-10 lg:py-5 mt-10 bg-white/40 lg:h-[550px] rounded-2xl column-center-flex gap-y-5"
     >
-      <h1 className="text-center font-poppins text-black text-4xl font-semibold">
+      <h1 className="text-center text-2xl font-poppins text-black lg:text-4xl font-semibold">
         Why FlashCV?
       </h1>
 
-      <p className="text-center w-[950px] font-poppins text-black/60 text-base font-medium">
+      <p className="text-center text-sm lg:w-[950px] font-poppins text-black/60 lg:text-base font-medium">
         FlashCV makes resume building effortless with AI-powered content
         suggestions, stunning professional templates, real-time editing, and
         instant PDF downloads – ensuring you create a job-winning resume in
         minutes!
       </p>
-      <div className="w-[80%] h-[70%] mt-2 px-3 py-2 flex justify-center items-center gap-x-5">
+      <div className="w-[80%] h-[70%] mt-2 px-3 py-2 flex flex-col lg:flex-row gap-y-5 gap-x-5">
         <FeaturesTile
           image={AIImage}
           text="AI Powered suggestions"
