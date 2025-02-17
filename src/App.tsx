@@ -1,6 +1,12 @@
 import React from "react";
 import { Route, Routes } from "react-router";
-import { LandingPage, LoginPage, RegisterPage } from "./exports/pages/exports";
+import {
+  DashboardPage,
+  LandingPage,
+  LoginPage,
+  ProcessingPage,
+  RegisterPage,
+} from "./exports/pages/exports";
 
 const App: React.FC = () => {
   return (
@@ -8,6 +14,8 @@ const App: React.FC = () => {
       <Route element={<LandingPage />} path="/" />
       <Route element={<RegisterPage />} path="/register" />
       <Route element={<LoginPage />} path="/login" />
+      <Route element={<ProcessingPage />} path="/auth/callback" />
+      <Route element={<DashboardPage />} path="/:username/dashboard" />
     </Routes>
   );
 };

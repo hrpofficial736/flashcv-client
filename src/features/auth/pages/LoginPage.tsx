@@ -5,7 +5,7 @@ export const LoginPage: React.FC = () => {
   return (
     <main className="w-screen h-screen flex">
       <LoginComponent />
-      <ImageSection />
+      {window.innerWidth > 1024 && <ImageSection />}
     </main>
   );
 };

@@ -5,7 +5,7 @@ export const RegisterPage: React.FC = () => {
   return (
     <main className="w-screen h-screen flex">
       <RegisterComponent />
-      <ImageSection />
+      {window.innerWidth > 1024 && <ImageSection />}
     </main>
   );
 };
