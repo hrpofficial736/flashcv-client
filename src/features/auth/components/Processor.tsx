@@ -29,7 +29,7 @@ export const Processor: React.FC = () => {
       navigate("/new/dashboard");
     };
 
-    handleAuthRedirect();
+    setTimeout(handleAuthRedirect, 3000);
   }, [navigate]);
   return (
     <div className="column-center-flex gap-y-2">

@@ -23,6 +23,7 @@ export const FormTextField: React.FC<FormTextFieldProps> = ({
       <input
         name={name}
         value={value}
+        required
         className="px-2 py-2 border border-zinc-400 w-full rounded-xl text-black/60 font-poppins"
         type={type}
         placeholder={placeholder}

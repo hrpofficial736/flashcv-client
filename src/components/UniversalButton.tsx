@@ -4,6 +4,7 @@ import { motion } from "motion/react";
 export interface UniversalButtonProps {
   text: string;
   icon?: React.ReactElement;
+  onPressed?: () => void;
 }
 
 export const UniversalButton: React.FC<UniversalButtonProps> = ({

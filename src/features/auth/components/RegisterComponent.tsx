@@ -7,8 +7,11 @@ import {
 } from "../../../exports/components/exports";
 import { Link } from "react-router";
 import { FaXTwitter } from "react-icons/fa6";
+import { registerWithNameEmailPassword } from "../services/supabaseAuth";
+import { useNavigate } from "react-router";
 
 export const RegisterComponent: React.FC = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState<{
     name: string;
     email: string;
@@ -55,33 +58,42 @@ export const RegisterComponent: React.FC = () => {
           <p>or continue with</p>
           <div className="bg-zinc-200 w-[30%] h-[1px]"></div>
         </div>
-        <div className="flex flex-col gap-y-4 mb-3">
-          <FormTextField
-            name="name"
-            value={formData.name}
-            label="Name"
-            placeholder="Name"
-            type="text"
-            changeHandler={handleChange}
-          />
-          <FormTextField
-            name="email"
-            value={formData.email}
-            label="Email"
-            placeholder="Email"
-            type="email"
-            changeHandler={handleChange}
-          />
-          <FormTextField
-            name="password"
-            value={formData.password}
-            label="Password"
-            placeholder="Password"
-            type="password"
-            changeHandler={handleChange}
-          />
-        </div>
-        <FormButton text="Register" />
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            navigate("/auth/callback");
+            registerWithNameEmailPassword(formData);
+          }}
+          className="flex flex-col gap-y-4"
+        >
+          <div className="flex flex-col gap-y-4 mb-3">
+            <FormTextField
+              name="name"
+              value={formData.name}
+              label="Name"
+              placeholder="Name"
+              type="text"
+              changeHandler={handleChange}
+            />
+            <FormTextField
+              name="email"
+              value={formData.email}
+              label="Email"
+              placeholder="Email"
+              type="email"
+              changeHandler={handleChange}
+            />
+            <FormTextField
+              name="password"
+              value={formData.password}
+              label="Password"
+              placeholder="Password"
+              type="password"
+              changeHandler={handleChange}
+            />
+          </div>
+          <FormButton text="Register" />
+        </form>
         <div>
           <p className="text-black/60 text-center text-sm font-poppins">
             Already have an account?{" "}

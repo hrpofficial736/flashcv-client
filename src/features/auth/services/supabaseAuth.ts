@@ -20,9 +20,17 @@ export const logInWithEmailPassword = async (userInfo: LoginUser) => {
   });
   if (error) console.log("Error signing in...", error);
   else {
-    console.log("User signed in!", data);
-    const response = await axios.post("/login", userInfo);
-    if (response) return true;
+    const response = await axios.post(
+      `${import.meta.env.VITE_SERVER_URI}/auth/login`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${data.session?.access_token}`,
+        },
+      },
+    );
+    console.log("User signed in!", data, "Response from server : ", response);
+    if (response.data.statusCode === 200) return true;
     else return false;
   }
 };
@@ -34,9 +42,17 @@ export const registerWithNameEmailPassword = async (userInfo: NewUser) => {
   });
   if (error) console.log("Error signing in...", error);
   else {
+    const response = await axios.post(
+      `${import.meta.env.VITE_SERVER_URI}/auth/register`,
+      { name: userInfo.name },
+      {
+        headers: {
+          Authorization: `Bearer ${data.session?.access_token}`,
+        },
+      },
+    );
     console.log("User signed in!", data);
-    const response = await axios.post("/register", userInfo);
-    if (response) return true;
+    if (response.data.statusCode === 201) return true;
     else return false;
   }
 };

@@ -8,8 +8,11 @@ import {
 } from "../../../exports/components/exports";
 import { Link } from "react-router";
 import { FaXTwitter } from "react-icons/fa6";
+import { logInWithEmailPassword } from "../services/supabaseAuth";
+import { useNavigate } from "react-router";
 
 export const LoginComponent: React.FC = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState<{
     email: string;
     password: string;
@@ -53,25 +56,34 @@ export const LoginComponent: React.FC = () => {
           <p>or continue with</p>
           <div className="bg-zinc-200 w-[30%] h-[1px]"></div>
         </div>
-        <div className="flex flex-col gap-y-4 mt-2 mb-3">
-          <FormTextField
-            name="email"
-            value={formData.email}
-            label="Email"
-            placeholder="Email"
-            type="email"
-            changeHandler={handleChange}
-          />
-          <FormTextField
-            name="password"
-            value={formData.password}
-            label="Password"
-            placeholder="Password"
-            type="password"
-            changeHandler={handleChange}
-          />
-        </div>
-        <FormButton text="Login" />
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            navigate("/auth/callback");
+            logInWithEmailPassword(formData);
+          }}
+          className="flex flex-col gap-y-4"
+        >
+          <div className="flex flex-col gap-y-4 mt-2 mb-3">
+            <FormTextField
+              name="email"
+              value={formData.email}
+              label="Email"
+              placeholder="Email"
+              type="email"
+              changeHandler={handleChange}
+            />
+            <FormTextField
+              name="password"
+              value={formData.password}
+              label="Password"
+              placeholder="Password"
+              type="password"
+              changeHandler={handleChange}
+            />
+          </div>
+          <FormButton text="Login" />
+        </form>
         <div>
           <p className="text-black/60 text-center text-sm font-poppins">
             Don't have an account?{" "}
