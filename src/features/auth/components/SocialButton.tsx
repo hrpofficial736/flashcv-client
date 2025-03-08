@@ -1,6 +1,6 @@
 import React from "react";
 import { UniversalButtonProps } from "../../../components/UniversalButton";
-import { signInWithProvider } from "../services/supabaseAuth";
+import useSupabaseAuth from "../hooks/useSupabaseAuth";
 
 interface SocialButtonProps extends UniversalButtonProps {
   provider: "google" | "twitter";
@@ -11,6 +11,7 @@ export const SocialButton: React.FC<SocialButtonProps> = ({
   icon,
   provider,
 }) => {
+  const { signInWithProvider } = useSupabaseAuth();
   return (
     <button
       onClick={() => signInWithProvider(provider)}

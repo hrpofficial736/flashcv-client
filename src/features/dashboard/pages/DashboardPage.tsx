@@ -1,8 +1,11 @@
-import React from 'react'
+import React from "react";
+import { useUserStore } from "../../../stores/useUserStore";
 
-export const DashboardPage : React.FC = () => {
+export const DashboardPage: React.FC = () => {
+  const { name, email, username } = useUserStore();
   return (
-    <div>Dashboard</div>
-  )
-}
-
+    <div>
+      {name} {email} {username}
+    </div>
+  );
+};

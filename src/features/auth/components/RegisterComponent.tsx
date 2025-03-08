@@ -7,11 +7,12 @@ import {
 } from "../../../exports/components/exports";
 import { Link } from "react-router";
 import { FaXTwitter } from "react-icons/fa6";
-import { registerWithNameEmailPassword } from "../services/supabaseAuth";
 import { useNavigate } from "react-router";
+import useSupabaseAuth from "../hooks/useSupabaseAuth";
 
 export const RegisterComponent: React.FC = () => {
   const navigate = useNavigate();
+  const { registerWithEmailPassword } = useSupabaseAuth();
   const [formData, setFormData] = useState<{
     name: string;
     email: string;
@@ -59,10 +60,14 @@ export const RegisterComponent: React.FC = () => {
           <div className="bg-zinc-200 w-[30%] h-[1px]"></div>
         </div>
         <form
-          onSubmit={(e) => {
+          onSubmit={async (e) => {
             e.preventDefault();
-            navigate("/auth/callback");
-            registerWithNameEmailPassword(formData);
+            const responseFromSupabaseAuth =
+              await registerWithEmailPassword(formData);
+            if (responseFromSupabaseAuth)
+              navigate("/auth/callback", {
+                state: { type: "register", provider: "" },
+              });
           }}
           className="flex flex-col gap-y-4"
         >

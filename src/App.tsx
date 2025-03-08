@@ -6,6 +6,7 @@ import {
   LoginPage,
   ProcessingPage,
   RegisterPage,
+  ResumePage,
 } from "./exports/pages/exports";
 
 const App: React.FC = () => {
@@ -16,6 +17,7 @@ const App: React.FC = () => {
       <Route element={<LoginPage />} path="/login" />
       <Route element={<ProcessingPage />} path="/auth/callback" />
       <Route element={<DashboardPage />} path="/:username/dashboard" />
+      <Route element={<ResumePage />} path="/:username/build-resume" />
     </Routes>
   );
 };

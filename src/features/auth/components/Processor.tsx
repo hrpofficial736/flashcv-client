@@ -1,36 +1,51 @@
-import React from "react";
-import { PuffLoader } from "react-spinners";
 import { useNavigate } from "react-router";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { PuffLoader } from "react-spinners";
+import removeHashFromUrl from "../../../utils/helpers/removeHashFromUrl";
+import { useAuthService } from "../services/authService";
+import { useUserStore } from "../../../stores/useUserStore";
+import { GlobalUser } from "../../../utils/interfaces/globalUserInterface";
 import { supabaseClient } from "../../../services/supabaseClient";
 
 export const Processor: React.FC = () => {
   const navigate = useNavigate();
-  useEffect(() => {
-    const removeHashFromUrl = () => {
-      if (window.location.hash) {
-        window.history.replaceState(
-          null,
-          document.title,
-          window.location.pathname + window.location.search,
+  const queryParams = new URLSearchParams(window.location.search);
+  const { loginService, registerService, signInWithProviderService } =
+    useAuthService();
+  const updateUser = useUserStore((state) => state.updateUser);
+  const { mutate: authMutation } = useMutation({
+    mutationFn: async (token: string) => {
+      if (queryParams.get("type") === "login") return await loginService(token);
+      else if (queryParams.get("type") === "register")
+        return await registerService(token);
+      else {
+        const responseFromAuthService = await signInWithProviderService(
+          new URLSearchParams(window.location.search).get("provider")!,
+          token,
         );
+        return responseFromAuthService;
       }
-    };
-
-    const handleAuthRedirect = async () => {
+    },
+    onSuccess: (data: GlobalUser) => {
+      updateUser(data.name, data.email, data.username);
+      if (data.resumeCount! > 0) navigate(`/${data.username}/dashboard`);
+      else navigate(`/${data.username}/build-resume`);
+    },
+  });
+  useEffect(() => {
+    async function getSession() {
       const { data, error } = await supabaseClient.auth.getSession();
-
       if (error || !data.session) {
-        console.error("Auth error:", error?.message || "No session found.");
+        console.error("No session found");
         navigate("/login");
         return;
       }
-      removeHashFromUrl();
-      navigate("/new/dashboard");
-    };
-
-    setTimeout(handleAuthRedirect, 3000);
-  }, [navigate]);
+      authMutation(data.session.access_token);
+    }
+    removeHashFromUrl();
+    getSession();
+  }, []);
   return (
     <div className="column-center-flex gap-y-2">
       <PuffLoader />

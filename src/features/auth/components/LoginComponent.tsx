@@ -8,11 +8,12 @@ import {
 } from "../../../exports/components/exports";
 import { Link } from "react-router";
 import { FaXTwitter } from "react-icons/fa6";
-import { logInWithEmailPassword } from "../services/supabaseAuth";
 import { useNavigate } from "react-router";
+import useSupabaseAuth from "../hooks/useSupabaseAuth";
 
 export const LoginComponent: React.FC = () => {
   const navigate = useNavigate();
+  const { logInWithEmailPassword } = useSupabaseAuth();
   const [formData, setFormData] = useState<{
     email: string;
     password: string;
@@ -57,10 +58,14 @@ export const LoginComponent: React.FC = () => {
           <div className="bg-zinc-200 w-[30%] h-[1px]"></div>
         </div>
         <form
-          onSubmit={(e) => {
+          onSubmit={async (e) => {
             e.preventDefault();
-            navigate("/auth/callback");
-            logInWithEmailPassword(formData);
+            const responseFromSupabseAuth =
+              await logInWithEmailPassword(formData);
+            if (responseFromSupabseAuth)
+              navigate("/auth/callback", {
+                state: { type: "login", provider: "" },
+              });
           }}
           className="flex flex-col gap-y-4"
         >
