@@ -1,4 +1,5 @@
-import { FirstSection } from "../../components/FirstSection";
+import { BasicInfo } from "../../components/BasicInfo";
 import { Timeline } from "../../components/Timeline";
+import { EducationSection } from "../../components/EducationSection";
 
-export { FirstSection, Timeline };
+export { BasicInfo, Timeline, EducationSection };

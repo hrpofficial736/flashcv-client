@@ -2,7 +2,7 @@ import React from "react";
 
 interface FormTextFieldProps {
   name: string;
-  value: string;
+  value: string | number;
   label: string;
   placeholder: string;
   type: string;

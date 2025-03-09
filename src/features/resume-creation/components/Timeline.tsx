@@ -1,15 +1,15 @@
 import React from "react";
 import { TimelineCircles } from "./TimelineCircles";
+import { motion } from "motion/react";
 
-export const Timeline: React.FC = () => {
+export const Timeline: React.FC<{ currentNumber: number }> = ({
+  currentNumber,
+}) => {
   return (
-    <main className="w-[90%] h-1 bg-orange-400 rounded-2xl m-10 flex items-center justify-between">
-      <TimelineCircles number={1} />
-      <TimelineCircles number={2} />
-      <TimelineCircles number={3} />
-      <TimelineCircles number={4} />
-      <TimelineCircles number={5} />
-      <TimelineCircles number={6} />
-    </main>
+    <motion.section className="w-[90%] h-1 bg-orange-400 rounded-2xl m-10 flex items-center justify-between">
+      {[0, 1, 2, 3, 4, 5].map((_, index) => {
+        return <TimelineCircles number={index + 1} />;
+      })}
+    </motion.section>
   );
 };
