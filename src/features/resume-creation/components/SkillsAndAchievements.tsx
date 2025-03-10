@@ -3,13 +3,16 @@ import { AnimatePresence, motion } from "motion/react";
 import { EducationInfoInterface } from "../interfaces/educationInfoInterface";
 import { FormFieldInterface } from "../../../utils/interfaces/formFieldInterface";
 import { FormTextField } from "../../../components/FormTextField";
-import { FaRegArrowAltCircleLeft, FaRegArrowAltCircleRight } from "react-icons/fa";
+import {
+  FaRegArrowAltCircleLeft,
+  FaRegArrowAltCircleRight,
+} from "react-icons/fa";
 import { SecondaryButton } from "../../../components/SecondaryButton";
 import { ProceedButton } from "./ProceedButton";
 import { useResumeSectionIndexStore } from "../../../stores/useResumeSectionIndexStore";
 
-export const EducationSection: React.FC = () => {
-  const {currentIndex, decrementCurrentIndex} = useResumeSectionIndexStore();
+export const SkillsAndAchievements: React.FC = () => {
+  const { currentIndex, decrementCurrentIndex } = useResumeSectionIndexStore();
   const [formData, setFormData] = useState<EducationInfoInterface>({
     degree: "",
     fieldOfStudy: "",
@@ -79,48 +82,48 @@ export const EducationSection: React.FC = () => {
   };
   return (
     <AnimatePresence mode="wait">
-      {currentIndex === 1 && 
-      <motion.section
-      key={"education-section"}
-        initial={{
-          x: 300,
-        }}
-        animate={{
-          x: 0,
-        }}
-        transition={{ duration: 0.5 }}
-        exit={{
-          x: -200,
-        }}
-        className={`flex flex-col gap-y-5 w-[90%] h-[60%] font-poppins px-5 py-5 m-10`}
-      >
-        <h1 className="text-2xl font-semibold">Education Information</h1>
-        <div className="grid grid-rows-3 grid-cols-2 mt-3 gap-5">
-          {textFieldElements.map((element, index) => {
-            return (
-              <div key={index} className="flex items-end gap-x-7">
-                <FormTextField
-                  name={element.name}
-                  changeHandler={(e) => changeEventHandler(e)}
-                  value={element.value ?? 0}
-                  type={element.type}
-                  label={element.label}
-                  placeholder={element.placeholder}
-                />
-              </div>
-            );
-          })}
-        </div>
-        <div className="flex justify-end gap-x-2 mt-3 ">
-          <SecondaryButton
-            text="Previous Step"
-            icon={<FaRegArrowAltCircleLeft />}
-            onPressed={decrementCurrentIndex}
-          />
-          <ProceedButton icon={<FaRegArrowAltCircleRight />} text="Proceed" />
-        </div>
-      </motion.section>
-}
+      {currentIndex === 1 && (
+        <motion.section
+          key={"education-section"}
+          initial={{
+            x: 300,
+          }}
+          animate={{
+            x: 0,
+          }}
+          transition={{ duration: 0.5 }}
+          exit={{
+            x: -200,
+          }}
+          className={`flex flex-col gap-y-5 w-[90%] h-[60%] font-poppins px-5 py-5 m-10`}
+        >
+          <h1 className="text-2xl font-semibold">Education Information</h1>
+          <div className="grid grid-rows-3 grid-cols-2 mt-3 gap-5">
+            {textFieldElements.map((element, index) => {
+              return (
+                <div key={index} className="flex items-end gap-x-7">
+                  <FormTextField
+                    name={element.name}
+                    changeHandler={(e) => changeEventHandler(e)}
+                    value={element.value ?? 0}
+                    type={element.type}
+                    label={element.label}
+                    placeholder={element.placeholder}
+                  />
+                </div>
+              );
+            })}
+          </div>
+          <div className="flex justify-end gap-x-2 mt-3 ">
+            <SecondaryButton
+              text="Previous Step"
+              icon={<FaRegArrowAltCircleLeft />}
+              onPressed={decrementCurrentIndex}
+            />
+            <ProceedButton icon={<FaRegArrowAltCircleRight />} text="Proceed" />
+          </div>
+        </motion.section>
+      )}
     </AnimatePresence>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FormTextField } from "../../../components/FormTextField";
 import { FormFieldInterface } from "../../../utils/interfaces/formFieldInterface";
 import { BasicInfoInterface } from "../interfaces/basicInfoInterface";
@@ -6,9 +6,12 @@ import { ProceedButton } from "./ProceedButton";
 import { FaMagic, FaRegArrowAltCircleRight } from "react-icons/fa";
 import { SecondaryButton } from "../../../components/SecondaryButton";
 import { GenerateWithAIButton } from "./GenerateWithAI";
-import { motion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
+import { useResumeSectionIndexStore } from "../../../stores/useResumeSectionIndexStore";
 
 export const BasicInfo: React.FC = () => {
+  const {currentIndex} = useResumeSectionIndexStore();
+  const [display, setDisplay] = useState<boolean>(true);
   const [formData, setFormData] = useState<BasicInfoInterface>({
     fullName: "",
     dob: "",
@@ -17,6 +20,7 @@ export const BasicInfo: React.FC = () => {
     location: "",
     address: "",
   });
+
   const textFieldElements: Array<FormFieldInterface> = [
     {
       name: "fullName",
@@ -61,36 +65,45 @@ export const BasicInfo: React.FC = () => {
       placeholder: "Enter your full address",
     },
   ];
+  useEffect(() => {
+    console.log("in basic info, index: ", currentIndex);
+    if (currentIndex !== 0) {
+      setDisplay(false);
+    }
+    return () => {
+      console.log("Unmounted");
+    };
+  }, [currentIndex]);
 
   const changeEventHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData((prevData) => {
-      const updatedFormData = { ...prevData, [name]: value };
-      return updatedFormData;
-    });
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
+
   return (
-    <motion.section
-      initial={{
-        x: 300,
-      }}
-      animate={{
-        x: 0,
-      }}
-      transition={{ duration: 0.5 }}
-      exit={{
-        x: -200,
-      }}
-      className=" flex flex-col gap-y-5 w-[90%] h-[60%] font-poppins px-5 py-5 m-10"
+    <AnimatePresence
+      mode="wait"
+      onExitComplete={() => console.log("Exit completed!")}
     >
-      <h1 className="text-2xl font-semibold">Basic Information</h1>
-      <div className="grid grid-rows-3 grid-cols-2 mt-3 gap-5">
-        {textFieldElements.map((element, index) => {
-          return (
-            <div className="flex items-end gap-x-7">
+      {display && (
+      <motion.section
+        key="basic-info"
+        initial={{ x: 300, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        exit={{ x: -300, opacity: 0 }}
+        transition={{
+          duration: 0.5,
+          ease: "easeInOut"
+        }}
+        className={`flex flex-col gap-y-5 w-[90%] h-[60%] font-poppins px-5 py-5 m-10`}
+      >
+        <h1 className="text-2xl font-semibold">Basic Information</h1>
+        <div className="grid grid-rows-3 grid-cols-2 mt-3 gap-5">
+          {textFieldElements.map((element, index) => (
+            <div className="flex items-end gap-x-7" key={index}>
               <FormTextField
                 name={element.name}
-                changeHandler={(e) => changeEventHandler(e)}
+                changeHandler={changeEventHandler}
                 value={element.value ?? ""}
                 type={element.type}
                 label={element.label}
@@ -103,13 +116,14 @@ export const BasicInfo: React.FC = () => {
                 />
               )}
             </div>
-          );
-        })}
-      </div>
-      <div className="flex justify-end gap-x-2 mt-3 ">
-        <SecondaryButton text="Skip to Dashboard" />
-        <ProceedButton icon={<FaRegArrowAltCircleRight />} text="Proceed" />
-      </div>
-    </motion.section>
+          ))}
+        </div>
+        <div className="flex justify-end gap-x-2 mt-3">
+          <SecondaryButton text="Skip to Dashboard" />
+          <ProceedButton icon={<FaRegArrowAltCircleRight />} text="Proceed" />
+        </div>
+      </motion.section>
+      )}
+    </AnimatePresence>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { ReactElement, useEffect } from "react";
 import getSession from "../../../utils/getters/getSession";
 import { useNavigate } from "react-router";
 import { Logo } from "../../../exports/assets/exports";
@@ -6,10 +6,24 @@ import {
   BasicInfo,
   Timeline,
   EducationSection,
+  ExperienceSection,
+  PreviewAndSave,
+  ContactInfo,
+  SkillsAndAchievements,
 } from "../exports/components/exports";
+import { useResumeSectionIndexStore } from "../../../stores/useResumeSectionIndexStore";
 
 const ResumePage: React.FC = () => {
   const navigate = useNavigate();
+  const currentSectionToDisplay = useResumeSectionIndexStore((state) => state.currentIndex);
+  const sectionsArray: Array<ReactElement> = [
+    <BasicInfo />,
+    <EducationSection />,
+    <SkillsAndAchievements />,
+    <ExperienceSection />,
+    <ContactInfo />,
+    <PreviewAndSave />,
+  ];
   useEffect(() => {
     async function checkForSession() {
       const session = await getSession();
@@ -26,8 +40,7 @@ const ResumePage: React.FC = () => {
           Craft Your Future, One Section at a Time!
         </p>
         <Timeline currentNumber={0} />
-        <BasicInfo />
-        <EducationSection display={false} />
+        {sectionsArray[currentSectionToDisplay]}
       </div>
     </main>
   );
