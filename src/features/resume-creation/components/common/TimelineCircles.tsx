@@ -1,5 +1,5 @@
 import React from "react";
-import { useResumeSectionIndexStore } from "../../../stores/useResumeSectionIndexStore";
+import { useResumeSectionIndexStore } from "../../../../stores/useResumeSectionIndexStore";
 
 export const TimelineCircles: React.FC<{ number: number }> = ({ number }) => {
   const { currentIndex } = useResumeSectionIndexStore();

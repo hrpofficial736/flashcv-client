@@ -1,7 +1,7 @@
 import React from "react";
 import { TimelineCircles } from "./TimelineCircles";
 import { motion } from "motion/react";
-import { useResumeSectionIndexStore } from "../../../stores/useResumeSectionIndexStore";
+import { useResumeSectionIndexStore } from "../../../../stores/useResumeSectionIndexStore";
 
 export const Timeline: React.FC = () => {
   const { currentIndex } = useResumeSectionIndexStore();

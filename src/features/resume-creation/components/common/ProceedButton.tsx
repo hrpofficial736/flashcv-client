@@ -1,5 +1,5 @@
-import { UniversalButtonProps } from "../../../components/UniversalButton";
-import { useResumeSectionIndexStore } from "../../../stores/useResumeSectionIndexStore";
+import { UniversalButtonProps } from "../../../../components/UniversalButton";
+import { useResumeSectionIndexStore } from "../../../../stores/useResumeSectionIndexStore";
 
 export const ProceedButton: React.FC<UniversalButtonProps> = ({
   text,
