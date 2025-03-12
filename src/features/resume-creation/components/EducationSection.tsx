@@ -12,7 +12,7 @@ import { ProceedButton } from "./common/ProceedButton";
 import { useResumeSectionIndexStore } from "../../../stores/useResumeSectionIndexStore";
 
 export const EducationSection: React.FC = () => {
-  const { currentIndex, decrementCurrentIndex } = useResumeSectionIndexStore();
+  const { currentIndex, decrementCurrentIndex, incrementCurrentIndex } = useResumeSectionIndexStore();
   const [formData, setFormData] = useState<EducationInfoInterface>({
     degree: "",
     fieldOfStudy: "",
@@ -80,10 +80,27 @@ export const EducationSection: React.FC = () => {
       return updatedFormData;
     });
   };
+  
+  
+    const validateForm = () => {
+      const errors = textFieldElements.map(
+        (field) => !formData[field.name as keyof EducationInfoInterface]
+      );
+      return !errors.includes(true);
+    }
+  
+    const proceed = (e: React.FormEvent) => {
+      e.preventDefault();
+      if (validateForm()) {
+        console.log("Proceeding to next section");
+        incrementCurrentIndex();
+      }
+    };
   return (
     <AnimatePresence mode="wait">
       {currentIndex === 1 && (
-        <motion.section
+        <motion.form
+          onSubmit={proceed}
           key={"education-section"}
           initial={{
             x: 300,
@@ -122,7 +139,7 @@ export const EducationSection: React.FC = () => {
             />
             <ProceedButton icon={<FaRegArrowAltCircleRight />} text="Proceed" />
           </div>
-        </motion.section>
+        </motion.form>
       )}
     </AnimatePresence>
   );

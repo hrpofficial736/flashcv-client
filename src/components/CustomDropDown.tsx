@@ -37,7 +37,7 @@ export const CustomDropDown: React.FC<{ items: string[] }> = ({ items }) => {
               duration: 0.3,
               ease: "easeInOut",
             }}
-            className="list-none bg-white w-full flex flex-col shadow-black/50 shadow-md z-50 absolute top-full left-0 rounded-lg"
+            className="list-none bg-white w-full flex flex-col shadow-black/50 shadow-md z-50 absolute top-full mt-1 left-0 rounded-lg"
           >
             {items.map((item, index) => {
               return (

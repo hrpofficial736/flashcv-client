@@ -6,6 +6,7 @@ interface FormTextFieldProps {
   label: string;
   placeholder: string;
   type: string;
+  error?: boolean;
   changeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -24,7 +25,7 @@ export const FormTextField: React.FC<FormTextFieldProps> = ({
         name={name}
         value={value}
         required
-        className="px-2 py-2 border border-zinc-400 w-full rounded-xl text-black/60 font-poppins"
+        className="px-2 py-2 max-w-[500px] border border-zinc-400 w-full rounded-xl text-black/60 font-poppins"
         type={type}
         placeholder={placeholder}
         onChange={(e) => changeHandler(e)}

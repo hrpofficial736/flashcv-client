@@ -11,6 +11,7 @@ import { Skills, Achievements } from "../exports/components/exports";
 
 export const SkillsAndAchievements: React.FC = () => {
   const { currentIndex, decrementCurrentIndex } = useResumeSectionIndexStore();
+  
   return (
     <AnimatePresence mode="wait">
       {currentIndex === 2 && (
@@ -28,7 +29,7 @@ export const SkillsAndAchievements: React.FC = () => {
           }}
           className={`flex flex-col gap-y-5 w-[90%] h-[60%] font-poppins px-5 py-5 m-10`}
         >
-          <h1 className="text-2xl font-semibold">Education Information</h1>
+          <h1 className="text-2xl font-semibold">Skills and Achievements</h1>
           <div className="flex gap-x-40 px-3 py-2">
             <Skills />
             <Achievements />

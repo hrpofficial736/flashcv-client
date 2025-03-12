@@ -10,7 +10,8 @@ import { AnimatePresence, motion } from "motion/react";
 import { useResumeSectionIndexStore } from "../../../stores/useResumeSectionIndexStore";
 
 export const BasicInfo: React.FC = () => {
-  const { currentIndex } = useResumeSectionIndexStore();
+  const { currentIndex, incrementCurrentIndex } = useResumeSectionIndexStore();
+  
   const [display, setDisplay] = useState<boolean>(true);
   const [formData, setFormData] = useState<BasicInfoInterface>({
     fullName: "",
@@ -79,6 +80,22 @@ export const BasicInfo: React.FC = () => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
+ 
+
+  const validateForm = () => {
+    const errors = textFieldElements.map(
+      (field) => !formData[field.name as keyof BasicInfoInterface]
+    );
+    return !errors.includes(true);
+  }
+
+  const proceed = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (validateForm()) {
+      console.log("Proceeding to next section");
+      incrementCurrentIndex();
+    }
+  };
 
   return (
     <AnimatePresence
@@ -86,7 +103,8 @@ export const BasicInfo: React.FC = () => {
       onExitComplete={() => console.log("Exit completed!")}
     >
       {display && (
-        <motion.section
+        <motion.form
+        onSubmit={proceed}
           key="basic-info"
           initial={{ x: 300, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
@@ -122,7 +140,7 @@ export const BasicInfo: React.FC = () => {
             <SecondaryButton text="Skip to Dashboard" />
             <ProceedButton icon={<FaRegArrowAltCircleRight />} text="Proceed" />
           </div>
-        </motion.section>
+        </motion.form>
       )}
     </AnimatePresence>
   );

@@ -37,8 +37,11 @@ export const Skills: React.FC = () => {
     console.log(formData);
   };
 
+  
+    
+      
   return (
-    <section className="flex flex-col gap-y-3 font-poppins">
+    <form className="flex flex-col gap-y-3 font-poppins">
       <h1 className="text-xl font-semibold">Skills</h1>
       {formData.map((skill, index) => {
         return (
@@ -60,6 +63,6 @@ export const Skills: React.FC = () => {
         icon={<FaPlus />}
         text="Add more skills"
       />
-    </section>
+    </form>
   );
 };
