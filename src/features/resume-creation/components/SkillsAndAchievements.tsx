@@ -10,12 +10,16 @@ import { useResumeSectionIndexStore } from "../../../stores/useResumeSectionInde
 import { Skills, Achievements } from "../exports/components/exports";
 
 export const SkillsAndAchievements: React.FC = () => {
-  const { currentIndex, decrementCurrentIndex } = useResumeSectionIndexStore();
+  const { currentIndex, decrementCurrentIndex, incrementCurrentIndex } = useResumeSectionIndexStore();
   
   return (
     <AnimatePresence mode="wait">
       {currentIndex === 2 && (
-        <motion.section
+        <motion.form
+          onSubmit={(e) => {
+            e.preventDefault();
+            incrementCurrentIndex();
+          }}
           key={"education-section"}
           initial={{
             x: 300,
@@ -42,7 +46,7 @@ export const SkillsAndAchievements: React.FC = () => {
             />
             <ProceedButton icon={<FaRegArrowAltCircleRight />} text="Proceed" />
           </div>
-        </motion.section>
+        </motion.form>
       )}
     </AnimatePresence>
   );

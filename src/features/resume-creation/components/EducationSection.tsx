@@ -82,25 +82,14 @@ export const EducationSection: React.FC = () => {
   };
   
   
-    const validateForm = () => {
-      const errors = textFieldElements.map(
-        (field) => !formData[field.name as keyof EducationInfoInterface]
-      );
-      return !errors.includes(true);
-    }
-  
-    const proceed = (e: React.FormEvent) => {
-      e.preventDefault();
-      if (validateForm()) {
-        console.log("Proceeding to next section");
-        incrementCurrentIndex();
-      }
-    };
   return (
     <AnimatePresence mode="wait">
       {currentIndex === 1 && (
         <motion.form
-          onSubmit={proceed}
+          onSubmit={(e) => {
+            e.preventDefault();
+            incrementCurrentIndex();
+          }}
           key={"education-section"}
           initial={{
             x: 300,

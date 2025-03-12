@@ -54,25 +54,15 @@ export const ExperienceSection: React.FC = () => {
     });
   };
   
-    const validateForm = () => {
-      const errors = formData.map(
-        (field) => Object.keys(field).map((key) => !field[key as keyof ExperienceInfoInterface])
-      );
-      return !errors.flat().includes(true);
-    }
-  
-    const proceed = (e: React.FormEvent) => {
-      e.preventDefault();
-      if (validateForm()) {
-        console.log("Proceeding to next section");
-        incrementCurrentIndex();
-      }
-    };
   const [checked, setChecked] = useState<boolean>(false);
   return (
     <AnimatePresence mode="wait">
       {currentIndex === 3 && (
-        <motion.form onSubmit={proceed}
+        <motion.form
+          onSubmit={(e) => {
+            e.preventDefault();
+            incrementCurrentIndex();
+          }}
           key={"education-section"}
           initial={{
             x: 300,
@@ -145,7 +135,7 @@ export const ExperienceSection: React.FC = () => {
                             return updatedFormData;
                           });
 
-                          return newChecked; 
+                          return newChecked;
                         });
                       }}
                       type="checkbox"

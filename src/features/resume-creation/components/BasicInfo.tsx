@@ -82,21 +82,6 @@ export const BasicInfo: React.FC = () => {
   };
  
 
-  const validateForm = () => {
-    const errors = textFieldElements.map(
-      (field) => !formData[field.name as keyof BasicInfoInterface]
-    );
-    return !errors.includes(true);
-  }
-
-  const proceed = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (validateForm()) {
-      console.log("Proceeding to next section");
-      incrementCurrentIndex();
-    }
-  };
-
   return (
     <AnimatePresence
       mode="wait"
@@ -104,7 +89,9 @@ export const BasicInfo: React.FC = () => {
     >
       {display && (
         <motion.form
-        onSubmit={proceed}
+        onSubmit={(e) => {e.preventDefault();
+          incrementCurrentIndex();
+        }}
           key="basic-info"
           initial={{ x: 300, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}

@@ -14,7 +14,6 @@ import { FaPlus } from "react-icons/fa6";
 
 export const ContactInfo: React.FC = () => {
   const { currentIndex, decrementCurrentIndex, incrementCurrentIndex } = useResumeSectionIndexStore();
-  const [isError, setIsError] = useState<boolean>(false);
   const [formData, setFormData] = useState<ContactInfoInterface>({
     phoneNo: "",
     email: "",
@@ -39,18 +38,15 @@ export const ContactInfo: React.FC = () => {
     });
   };
 
-  const proceed = () => {
-    if (formData.email && formData.phoneNo && formData.socials![0] !== "") {
-      incrementCurrentIndex();
-      return;
-    }
-    setIsError(true);
-    return;
-  }
+  
   return (
     <AnimatePresence mode="wait">
       {currentIndex === 4 && (
-        <motion.section
+        <motion.form
+          onSubmit={(e) => {
+            e.preventDefault();
+            incrementCurrentIndex();
+          }}
           key={"contact-info-section"}
           initial={{
             x: 300,
@@ -67,7 +63,7 @@ export const ContactInfo: React.FC = () => {
           <h1 className="text-2xl font-semibold">Contact Information</h1>
           <div className="flex flex-col gap-y-5">
             <div className="flex gap-x-10">
-              <FormTextField error={isError}
+              <FormTextField
                 changeHandler={changeEventHandler}
                 name="phoneNo"
                 value={formData.phoneNo}
@@ -75,8 +71,8 @@ export const ContactInfo: React.FC = () => {
                 label="Phone number"
                 placeholder="E.g. 1234567890"
               />
-              
-              <FormTextField error={isError}
+
+              <FormTextField
                 changeHandler={changeEventHandler}
                 name="email"
                 value={formData.email}
@@ -89,7 +85,7 @@ export const ContactInfo: React.FC = () => {
               <h1 className="text-lg font-medium">Social Links</h1>
               {formData.socials?.map((link, index) => {
                 return (
-                  <FormTextField error={isError}
+                  <FormTextField
                     label="Link"
                     key={index}
                     name="socials"
@@ -100,7 +96,11 @@ export const ContactInfo: React.FC = () => {
                   />
                 );
               })}
-              <MoreButton onPressed={addMoreSocials} text="Add more socials" icon={<FaPlus />} />
+              <MoreButton
+                onPressed={addMoreSocials}
+                text="Add more socials"
+                icon={<FaPlus />}
+              />
             </div>
           </div>
           <div className="flex justify-end gap-x-2 mt-3 ">
@@ -109,9 +109,9 @@ export const ContactInfo: React.FC = () => {
               icon={<FaRegArrowAltCircleLeft />}
               onPressed={decrementCurrentIndex}
             />
-            <ProceedButton onPressed={proceed} icon={<FaRegArrowAltCircleRight />} text="Proceed" />
+            <ProceedButton icon={<FaRegArrowAltCircleRight />} text="Proceed" />
           </div>
-        </motion.section>
+        </motion.form>
       )}
     </AnimatePresence>
   );
