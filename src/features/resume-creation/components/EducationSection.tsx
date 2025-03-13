@@ -43,7 +43,7 @@ export const EducationSection: React.FC = () => {
     {
       name: "universityName",
       label: "University",
-      type: "date",
+      type: "text",
       value: formData.universityName,
       placeholder: "Enter university name",
     },
@@ -104,10 +104,12 @@ export const EducationSection: React.FC = () => {
           exit={{
             x: -200,
           }}
-          className={`flex flex-col gap-y-5 w-[90%] h-[60%] font-poppins px-5 py-5 m-10`}
+          className={`flex flex-col gap-y-5 w-[80%] lg:w-[90%] h-[60%] font-poppins px-5 py-5 lg:m-10`}
         >
-          <h1 className="text-2xl font-semibold">Education Information</h1>
-          <div className="grid grid-rows-3 grid-cols-2 mt-3 gap-5">
+          <h1 className="lg:text-2xl text-lg font-semibold">
+            Education Information
+          </h1>
+          <div className="flex flex-col lg:grid lg:grid-rows-3 lg:grid-cols-2 mt-3 gap-5">
             {textFieldElements.map((element, index) => {
               return (
                 <div key={index} className="flex items-end gap-x-7">
@@ -115,7 +117,9 @@ export const EducationSection: React.FC = () => {
                     name={element.name}
                     changeHandler={(e) => changeEventHandler(e)}
                     value={
-                      info[element.name as keyof EducationInfoInterface] !== ""
+                      info[element.name as keyof EducationInfoInterface] !==
+                        "" &&
+                      info[element.name as keyof EducationInfoInterface] !== 0
                         ? info[element.name as keyof EducationInfoInterface]
                         : element.value!
                     }
@@ -127,7 +131,7 @@ export const EducationSection: React.FC = () => {
               );
             })}
           </div>
-          <div className="flex justify-end gap-x-2 mt-3 ">
+          <div className="flex max-lg:flex-col max-lg:gap-y-4 justify-center lg:justify-end gap-x-2 mt-3">
             <SecondaryButton
               text="Previous Step"
               icon={<FaRegArrowAltCircleLeft />}

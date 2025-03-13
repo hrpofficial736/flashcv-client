@@ -14,6 +14,7 @@ import { MoreButton } from "../../../components/MoreButton";
 import { FaPlus } from "react-icons/fa6";
 import { useExperiencesStore } from "../../../stores/useExperiencesStore";
 import { GenerateWithAIButton } from "./common/GenerateWithAI";
+import { v4 as uuidv4 } from "uuid";
 
 export const ExperienceSection: React.FC = () => {
   const { currentIndex, decrementCurrentIndex, incrementCurrentIndex } =
@@ -21,7 +22,7 @@ export const ExperienceSection: React.FC = () => {
   const { experiences, addExperiences } = useExperiencesStore();
   const [formData, setFormData] = useState<ExperienceInfoInterface[]>([
     {
-      id: crypto.randomUUID(),
+      id: uuidv4(),
       jobName: "",
       companyName: "",
       responsibilities: "",
@@ -48,7 +49,7 @@ export const ExperienceSection: React.FC = () => {
       const updatedFormData: ExperienceInfoInterface[] = [
         ...prevData,
         {
-          id: crypto.randomUUID(),
+          id: uuidv4(),
           jobName: "",
           companyName: "",
           responsibilities: "",
@@ -94,14 +95,16 @@ export const ExperienceSection: React.FC = () => {
           exit={{
             x: -200,
           }}
-          className={`flex flex-col  gap-y-5 w-[90%] h-[60%] font-poppins px-5 py-5 m-10`}
+          className={`flex flex-col gap-y-5 w-[80%] lg:w-[90%] h-[60%] font-poppins px-5 py-5 lg:m-10`}
         >
-          <h1 className="text-2xl font-semibold">Experience Information</h1>
+          <h1 className="lg:text-2xl text-lg font-semibold">
+            Experience Information
+          </h1>
           {formData.map((element, index) => {
             return (
               <div
                 key={element.id}
-                className="grid gap-y-5 gap-x-20 grid-cols-3 mt-3"
+                className="flex flex-col lg:grid lg:grid-rows-3 lg:grid-cols-2 mt-3 gap-5"
               >
                 <FormTextField
                   name={"jobName"}
@@ -109,9 +112,11 @@ export const ExperienceSection: React.FC = () => {
                   value={
                     experiences.find(
                       (experienceItem) => experienceItem.id === element.id
-                    )?.jobName !== "" ? experiences.find(
-                      (experienceItem) => experienceItem.id === element.id
-                    )?.jobName! : element.jobName
+                    )?.jobName !== ""
+                      ? experiences.find(
+                          (experienceItem) => experienceItem.id === element.id
+                        )?.jobName!
+                      : element.jobName
                   }
                   type="text"
                   label={"Job name"}
@@ -123,9 +128,11 @@ export const ExperienceSection: React.FC = () => {
                   value={
                     experiences.find(
                       (experienceItem) => experienceItem.id === element.id
-                    )?.companyName !== "" ? experiences.find(
-                      (experienceItem) => experienceItem.id === element.id
-                    )?.companyName! : element.companyName
+                    )?.companyName !== ""
+                      ? experiences.find(
+                          (experienceItem) => experienceItem.id === element.id
+                        )?.companyName!
+                      : element.companyName
                   }
                   type="text"
                   label={"Company name"}
@@ -137,9 +144,11 @@ export const ExperienceSection: React.FC = () => {
                   value={
                     experiences.find(
                       (experienceItem) => experienceItem.id === element.id
-                    )?.location !== "" ? experiences.find(
-                      (experienceItem) => experienceItem.id === element.id
-                    )?.location! : element.location!
+                    )?.location !== ""
+                      ? experiences.find(
+                          (experienceItem) => experienceItem.id === element.id
+                        )?.location!
+                      : element.location!
                   }
                   type="text"
                   label={"Company location"}
@@ -152,9 +161,11 @@ export const ExperienceSection: React.FC = () => {
                     value={
                       experiences.find(
                         (experienceItem) => experienceItem.id === element.id
-                      )?.startDate !== "" ? experiences.find(
-                        (experienceItem) => experienceItem.id === element.id
-                      )?.startDate! : element.startDate
+                      )?.startDate !== ""
+                        ? experiences.find(
+                            (experienceItem) => experienceItem.id === element.id
+                          )?.startDate!
+                        : element.startDate
                     }
                     type="date"
                     label={"Start date"}
@@ -194,9 +205,11 @@ export const ExperienceSection: React.FC = () => {
                   value={
                     experiences.find(
                       (experienceItem) => experienceItem.id === element.id
-                    )?.endDate !== "" ? experiences.find(
-                      (experienceItem) => experienceItem.id === element.id
-                    )?.endDate! : element.endDate
+                    )?.endDate !== ""
+                      ? experiences.find(
+                          (experienceItem) => experienceItem.id === element.id
+                        )?.endDate!
+                      : element.endDate
                   }
                   type="date"
                   label={"End date"}
@@ -214,9 +227,11 @@ export const ExperienceSection: React.FC = () => {
                     value={
                       experiences.find(
                         (experienceItem) => experienceItem.id === element.id
-                      )?.responsibilities !== "" ? experiences.find(
-                        (experienceItem) => experienceItem.id === element.id
-                      )?.responsibilities! : element.responsibilities
+                      )?.responsibilities !== ""
+                        ? experiences.find(
+                            (experienceItem) => experienceItem.id === element.id
+                          )?.responsibilities!
+                        : element.responsibilities
                     }
                     name="responsibilities"
                   />
@@ -238,7 +253,7 @@ export const ExperienceSection: React.FC = () => {
             text="Add more experiences"
             icon={<FaPlus />}
           />
-          <div className="flex justify-end gap-x-2 mt-3 ">
+          <div className="flex justify-end gap-x-2 mt-3">
             <SecondaryButton
               text="Previous Step"
               icon={<FaRegArrowAltCircleLeft />}

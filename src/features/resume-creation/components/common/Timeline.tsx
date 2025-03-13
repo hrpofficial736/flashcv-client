@@ -1,22 +1,43 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { TimelineCircles } from "./TimelineCircles";
 import { motion } from "motion/react";
 import { useResumeSectionIndexStore } from "../../../../stores/useResumeSectionIndexStore";
 
 export const Timeline: React.FC = () => {
   const { currentIndex } = useResumeSectionIndexStore();
-  const sliderWidth = currentIndex * 20;
+  const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth > 1024);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsLargeScreen(window.innerWidth > 1024);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const sliderWidth = isLargeScreen ? currentIndex * 20 : 10;
+  const sliderHeight = isLargeScreen ? 1 : currentIndex * 20;
 
   return (
-    <section className="relative h-10 m-10 flex items-center">
-      <div className="h-1 bg-orange-100 rounded-2xl absolute top-1/2 left-0 right-0 -translate-y-1/2"></div>
+    <section className="relative w-fit h-[500px] lg:h-10 max-lg:mt-10 lg:m-10 flex flex-col justify-center lg:flex-row items-center">
+      <div className="h-full w-1 lg:h-1 bg-orange-100 rounded-2xl absolute lg:top-1/2 lg:left-0 lg:right-0 lg:-translate-y-1/2"></div>
+
+      {/* Animated Progress Bar */}
       <motion.div
-        className="h-1 bg-orange-400 rounded-2xl absolute"
-        initial={{ width: 0 }}
-        animate={{ width: `${sliderWidth}%` }}
+        className="lg:h-1 bg-orange-400 rounded-2xl absolute"
+        initial={{ width: 0, height: 0 }}
+        animate={{ width: `${sliderWidth}%`, height: `${sliderHeight}%` }}
         transition={{ type: "spring", stiffness: 100, damping: 15 }}
+        style={{
+          left: isLargeScreen ? "0" : "50%",
+          top: isLargeScreen ? "50%" : "0",
+          transform: isLargeScreen ? "translateY(-50%)" : "translateX(-50%)",
+        }}
       />
-      <div className="flex justify-between w-full relative">
+
+      {/* Timeline Circles */}
+      <div className="flex flex-col h-full justify-between lg:flex-row w-full relative">
         {[0, 1, 2, 3, 4, 5].map((_, index) => (
           <TimelineCircles key={index} number={index + 1} />
         ))}

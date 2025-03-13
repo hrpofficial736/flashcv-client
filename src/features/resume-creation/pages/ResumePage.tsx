@@ -1,6 +1,6 @@
 import React, { ReactElement, useEffect } from "react";
 import getSession from "../../../utils/getters/getSession";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { Logo } from "../../../exports/assets/exports";
 import {
   BasicInfo,
@@ -15,6 +15,7 @@ import { useResumeSectionIndexStore } from "../../../stores/useResumeSectionInde
 
 const ResumePage: React.FC = () => {
   const navigate = useNavigate();
+  const {username} = useParams<{username: string}>();
   const currentSectionToDisplay = useResumeSectionIndexStore((state) => state.currentIndex);
   const sectionsArray: Array<ReactElement> = [
     <BasicInfo />,
@@ -24,23 +25,28 @@ const ResumePage: React.FC = () => {
     <ContactInfo />,
     <PreviewAndSave />,
   ];
-  useEffect(() => {
-    async function checkForSession() {
-      const session = await getSession();
-      if (!session) navigate("/login");
-    }
-    checkForSession();
-  }, []);
+  // useEffect(() => {
+  //   async function checkForSession() {
+  //     const session = await getSession(username!);
+  //     if (!session) navigate("/login");
+  //   }
+  //   checkForSession();
+  // }, []);
   return (
     <main className="px-3 py-2 font-poppins w-screen h-screen">
       <img src={Logo} className="w-36 h-10" />
-      <div className="px-10 py-5 mt-5">
-        <h1 className="text-4xl font-bold">Let's build your resume!</h1>
-        <p className="text-xl font-light">
+      <div className="lg:px-10 lg:py-5 mt-5">
+        <h1 className="lg:text-4xl text-xl font-bold">
+          Let's build your resume!
+        </h1>
+        <p className="lg:text-xl text-sm font-light">
           Craft Your Future, One Section at a Time!
         </p>
-        <Timeline currentNumber={0} />
-        {sectionsArray[currentSectionToDisplay]}
+
+        <div className="flex lg:flex-col">
+          <Timeline />
+          {sectionsArray[currentSectionToDisplay]}
+        </div>
       </div>
     </main>
   );

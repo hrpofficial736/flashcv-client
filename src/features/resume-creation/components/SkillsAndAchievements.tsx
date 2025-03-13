@@ -46,14 +46,16 @@ export const SkillsAndAchievements: React.FC = () => {
           exit={{
             x: -200,
           }}
-          className={`flex flex-col gap-y-5 w-[90%] h-[60%] font-poppins px-5 py-5 m-10`}
+          className={`flex flex-col gap-y-5 w-[80%] lg:w-[90%] h-[60%] font-poppins px-5 py-5 lg:m-10`}
         >
-          <h1 className="text-2xl font-semibold">Skills and Achievements</h1>
-          <div className="flex gap-x-40 px-3 py-2">
+          <h1 className="lg:text-2xl text-xl font-semibold">
+            Skills and Achievements
+          </h1>
+          <div className="flex max-lg:flex-col max-lg:gap-y-20 lg:gap-x-40 px-3 py-2">
             <Skills callback={getSkillsData} />
             <Achievements callback={getAchievementsData} />
           </div>
-          <div className="flex justify-end gap-x-2 mt-3 ">
+          <div className="flex max-lg:flex-col max-lg:gap-y-4 justify-center lg:justify-end gap-x-2 mt-3">
             <SecondaryButton
               text="Previous Step"
               icon={<FaRegArrowAltCircleLeft />}

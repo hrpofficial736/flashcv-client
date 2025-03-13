@@ -4,6 +4,7 @@ import { FaPlus } from "react-icons/fa6";
 import { AchievementsInterface } from "../exports/interfaces/exports";
 import { MoreButton } from "../../../components/MoreButton";
 import { useAchievementsStore } from "../../../stores/useAchievementsStore";
+import { v4 as uuidv4 } from "uuid";
 
 export const Achievements: React.FC<{
   callback: (info: AchievementsInterface[]) => void;
@@ -11,7 +12,7 @@ export const Achievements: React.FC<{
   const { achievements } = useAchievementsStore();
   const [formData, setFormData] = useState<Array<AchievementsInterface>>([
     {
-      id: crypto.randomUUID(),
+      id: uuidv4(),
       name: "",
       description: "",
       date: "",
@@ -33,7 +34,7 @@ export const Achievements: React.FC<{
     setFormData((prevData) => {
       const updatedFormData: Array<AchievementsInterface> = [
         ...prevData,
-        { id: crypto.randomUUID(), name: "", description: "", date: "" },
+        { id: uuidv4(), name: "", description: "", date: "" },
       ];
       return updatedFormData;
     });

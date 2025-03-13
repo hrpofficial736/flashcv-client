@@ -70,15 +70,21 @@ export const ContactInfo: React.FC = () => {
           exit={{
             x: -200,
           }}
-          className={`flex flex-col gap-y-5 w-[90%] h-[60%] font-poppins px-5 py-5 m-10`}
+          className={`flex flex-col gap-y-5 w-[80%] lg:w-[90%] h-[60%] font-poppins px-5 py-5 lg:m-10`}
         >
-          <h1 className="text-2xl font-semibold">Contact Information</h1>
+          <h1 className="lg:text-2xl text-lg font-semibold">
+            Contact Information
+          </h1>
           <div className="flex flex-col gap-y-5">
-            <div className="flex gap-x-10">
+            <div className="flex max-lg:flex-col gap-y-5 gap-x-10">
               <FormTextField
                 changeHandler={changeEventHandler}
                 name="phoneNo"
-                value={contactInfo.phoneNo !== "" ? contactInfo.phoneNo : formData.phoneNo}
+                value={
+                  contactInfo.phoneNo !== ""
+                    ? contactInfo.phoneNo
+                    : formData.phoneNo
+                }
                 type="tel"
                 label="Phone number"
                 placeholder="E.g. 1234567890"
@@ -115,7 +121,7 @@ export const ContactInfo: React.FC = () => {
               />
             </div>
           </div>
-          <div className="flex justify-end gap-x-2 mt-3 ">
+          <div className="flex max-lg:flex-col max-lg:gap-y-4 justify-center lg:justify-end gap-x-2 mt-3">
             <SecondaryButton
               text="Previous Step"
               icon={<FaRegArrowAltCircleLeft />}

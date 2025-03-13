@@ -5,23 +5,27 @@ import { SkillInterface } from "../exports/interfaces/exports";
 import { CustomDropDown } from "../../../components/CustomDropDown";
 import { MoreButton } from "../../../components/MoreButton";
 import { useSkillsStore } from "../../../stores/useSkillsStore";
+import {v4 as uuidv4} from "uuid";
 
-
-
-export const Skills: React.FC<{callback: (info: SkillInterface[]) => void;}> = ({callback}) => {
+export const Skills: React.FC<{
+  callback: (info: SkillInterface[]) => void;
+}> = ({ callback }) => {
   const [formData, setFormData] = useState<Array<SkillInterface>>([
     {
-      id: crypto.randomUUID(),
+      id: uuidv4(),
       name: "",
       level: "",
     },
   ]);
-  const {skills} = useSkillsStore();
-  const changeEventHandler = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
+  const { skills } = useSkillsStore();
+  const changeEventHandler = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number
+  ) => {
     const { name, value } = e.target;
     setFormData((prevData) => {
-      const updatedFormData : Array<SkillInterface> = [...prevData];
-      updatedFormData[index] = {...updatedFormData[index], [name]: value};
+      const updatedFormData: Array<SkillInterface> = [...prevData];
+      updatedFormData[index] = { ...updatedFormData[index], [name]: value };
       return updatedFormData;
     });
     callback(formData);
@@ -34,7 +38,7 @@ export const Skills: React.FC<{callback: (info: SkillInterface[]) => void;}> = (
       const updatedFormData = [
         ...prevData,
         {
-          id: crypto.randomUUID(),
+          id: uuidv4(),
           name: "",
           level: "",
         },
@@ -44,21 +48,23 @@ export const Skills: React.FC<{callback: (info: SkillInterface[]) => void;}> = (
     console.log(formData);
   };
 
-  
-    
-      
   return (
     <section className="flex flex-col gap-y-3 font-poppins">
       <h1 className="text-xl font-semibold">Skills</h1>
       {formData.map((skill, index) => {
         return (
-          <div key={skill.id} className="flex items-end gap-x-3 mb-5">
+          <div key={skill.id} className="flex max-lg:flex-col gap-y-4 max-lg:items-start items-end gap-x-3 mb-5">
             <FormTextField
               name="name"
               label="Skill"
               placeholder="E.g. Digital Marketing etc."
               type="text"
-              value={skills.find((skillItem) => skillItem.id === skill.id)?.name !== "" ? skills.find((skillItem) => skillItem.id === skill.id)?.name! : skill.name}
+              value={
+                skills.find((skillItem) => skillItem.id === skill.id)?.name !==
+                ""
+                  ? skills.find((skillItem) => skillItem.id === skill.id)?.name!
+                  : skill.name
+              }
               changeHandler={(e) => changeEventHandler(e, index)}
             />
             <CustomDropDown items={["Beginner", "Intermediate", "Advanced"]} />

@@ -6,7 +6,7 @@ export const CustomDropDown: React.FC<{ items: string[] }> = ({ items }) => {
   const [open, setOpen] = useState<boolean>(false);
   const [selectedValue, setSelectedValue] = useState<string>(items[0]);
   return (
-    <div className="relative w-48">
+    <div className="relative w-56">
       <div
         onClick={() => setOpen(!open)}
         className="px-3 w-full py-2 font-poppins flex justify-between items-center gap-x-5 cursor-pointer shadow-sm shadow-black/30 rounded-lg"

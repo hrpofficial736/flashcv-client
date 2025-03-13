@@ -109,12 +109,12 @@ export const BasicInfo: React.FC = () => {
             duration: 0.5,
             ease: "easeInOut",
           }}
-          className={`flex flex-col gap-y-5 w-[90%] h-[60%] font-poppins px-5 py-5 m-10`}
+          className={`flex flex-col gap-y-5 w-[80%] lg:w-[90%] h-[60%] font-poppins px-5 py-5 lg:m-10`}
         >
-          <h1 className="text-2xl font-semibold">Basic Information</h1>
-          <div className="grid grid-rows-3 grid-cols-2 mt-3 gap-5">
+          <h1 className="lg:text-2xl text-lg font-semibold">Basic Information</h1>
+          <div className="flex flex-col lg:grid lg:grid-rows-3 lg:grid-cols-2 mt-3 gap-5">
             {textFieldElements.map((element, index) => (
-              <div className="flex items-end gap-x-7" key={index}>
+              <div className="flex max-lg:flex-col max-lg:items-start max-lg:gap-y-3 items-end gap-x-7" key={index}>
                 <FormTextField
                   name={element.name}
                   changeHandler={changeEventHandler}
@@ -132,7 +132,7 @@ export const BasicInfo: React.FC = () => {
               </div>
             ))}
           </div>
-          <div className="flex justify-end gap-x-2 mt-3">
+          <div className="flex max-lg:flex-col max-lg:gap-y-4 justify-center lg:justify-end gap-x-2 mt-3">
             <SecondaryButton text="Skip to Dashboard" />
             <ProceedButton icon={<FaRegArrowAltCircleRight />} text="Proceed" />
           </div>
