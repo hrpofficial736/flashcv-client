@@ -11,9 +11,12 @@ import {
 import { ProceedButton } from "./common/ProceedButton";
 import { MoreButton } from "../../../components/MoreButton";
 import { FaPlus } from "react-icons/fa6";
+import { useContactInfoStore } from "../../../stores/useContactInfoStore";
 
 export const ContactInfo: React.FC = () => {
-  const { currentIndex, decrementCurrentIndex, incrementCurrentIndex } = useResumeSectionIndexStore();
+  const { currentIndex, decrementCurrentIndex, incrementCurrentIndex } =
+    useResumeSectionIndexStore();
+  const { contactInfo, addContact } = useContactInfoStore();
   const [formData, setFormData] = useState<ContactInfoInterface>({
     phoneNo: "",
     email: "",
@@ -22,15 +25,24 @@ export const ContactInfo: React.FC = () => {
 
   const addMoreSocials = () => {
     setFormData((prevData) => {
-      const updatedFormdata : ContactInfoInterface = {...prevData, socials: [...(prevData.socials!), ""]};
+      const updatedFormdata: ContactInfoInterface = {
+        ...prevData,
+        socials: [...prevData.socials!, ""],
+      };
       return updatedFormdata;
-    })
-  }
-  const changeEventHandler = (e: React.ChangeEvent<HTMLInputElement>, index?: number) => {
+    });
+  };
+  const changeEventHandler = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index?: number
+  ) => {
     const { name, value } = e.target;
     setFormData((prevData) => {
       if (name === "socials") {
-        const updatedFormData = { ...prevData, [name]: [...prevData.socials![index!], value]};
+        const updatedFormData = {
+          ...prevData,
+          [name]: [...prevData.socials![index!], value],
+        };
         return updatedFormData;
       }
       const updatedFormData = { ...prevData, [name]: value };
@@ -38,13 +50,13 @@ export const ContactInfo: React.FC = () => {
     });
   };
 
-  
   return (
     <AnimatePresence mode="wait">
       {currentIndex === 4 && (
         <motion.form
           onSubmit={(e) => {
             e.preventDefault();
+            addContact(formData);
             incrementCurrentIndex();
           }}
           key={"contact-info-section"}
@@ -66,7 +78,7 @@ export const ContactInfo: React.FC = () => {
               <FormTextField
                 changeHandler={changeEventHandler}
                 name="phoneNo"
-                value={formData.phoneNo}
+                value={contactInfo.phoneNo !== "" ? contactInfo.phoneNo : formData.phoneNo}
                 type="tel"
                 label="Phone number"
                 placeholder="E.g. 1234567890"
@@ -75,7 +87,7 @@ export const ContactInfo: React.FC = () => {
               <FormTextField
                 changeHandler={changeEventHandler}
                 name="email"
-                value={formData.email}
+                value={contactInfo.email ?? formData.email}
                 type="email"
                 label="Email"
                 placeholder="E.g. xyz@example.com"
@@ -91,7 +103,7 @@ export const ContactInfo: React.FC = () => {
                     name="socials"
                     type="text"
                     changeHandler={changeEventHandler}
-                    value={link}
+                    value={contactInfo.socials![index] ?? link}
                     placeholder="http://my-social-profile.xyz"
                   />
                 );

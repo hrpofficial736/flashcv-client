@@ -10,9 +10,12 @@ import {
 import { SecondaryButton } from "../../../components/SecondaryButton";
 import { ProceedButton } from "./common/ProceedButton";
 import { useResumeSectionIndexStore } from "../../../stores/useResumeSectionIndexStore";
+import { useEducationInfoStore } from "../../../stores/useEducationInfoStore";
 
 export const EducationSection: React.FC = () => {
-  const { currentIndex, decrementCurrentIndex, incrementCurrentIndex } = useResumeSectionIndexStore();
+  const { currentIndex, decrementCurrentIndex, incrementCurrentIndex } =
+    useResumeSectionIndexStore();
+  const { info, addEducation } = useEducationInfoStore();
   const [formData, setFormData] = useState<EducationInfoInterface>({
     degree: "",
     fieldOfStudy: "",
@@ -80,14 +83,14 @@ export const EducationSection: React.FC = () => {
       return updatedFormData;
     });
   };
-  
-  
+
   return (
     <AnimatePresence mode="wait">
       {currentIndex === 1 && (
         <motion.form
           onSubmit={(e) => {
             e.preventDefault();
+            addEducation(formData);
             incrementCurrentIndex();
           }}
           key={"education-section"}
@@ -111,7 +114,11 @@ export const EducationSection: React.FC = () => {
                   <FormTextField
                     name={element.name}
                     changeHandler={(e) => changeEventHandler(e)}
-                    value={element.value ?? 0}
+                    value={
+                      info[element.name as keyof EducationInfoInterface] !== ""
+                        ? info[element.name as keyof EducationInfoInterface]
+                        : element.value!
+                    }
                     type={element.type}
                     label={element.label}
                     placeholder={element.placeholder}

@@ -5,17 +5,23 @@ import { AnimatePresence, motion } from "motion/react";
 import { FormTextField } from "../../../components/FormTextField";
 import { SecondaryButton } from "../../../components/SecondaryButton";
 import {
+  FaMagic,
   FaRegArrowAltCircleLeft,
   FaRegArrowAltCircleRight,
 } from "react-icons/fa";
 import { ProceedButton } from "./common/ProceedButton";
 import { MoreButton } from "../../../components/MoreButton";
 import { FaPlus } from "react-icons/fa6";
+import { useExperiencesStore } from "../../../stores/useExperiencesStore";
+import { GenerateWithAIButton } from "./common/GenerateWithAI";
 
 export const ExperienceSection: React.FC = () => {
-  const { currentIndex, decrementCurrentIndex, incrementCurrentIndex } = useResumeSectionIndexStore();
-  const [formData, setFormData] = useState<Array<ExperienceInfoInterface>>([
+  const { currentIndex, decrementCurrentIndex, incrementCurrentIndex } =
+    useResumeSectionIndexStore();
+  const { experiences, addExperiences } = useExperiencesStore();
+  const [formData, setFormData] = useState<ExperienceInfoInterface[]>([
     {
+      id: crypto.randomUUID(),
       jobName: "",
       companyName: "",
       responsibilities: "",
@@ -31,7 +37,7 @@ export const ExperienceSection: React.FC = () => {
   ) => {
     const { name, value } = e.target;
     setFormData((prevData) => {
-      const updatedFormData: Array<ExperienceInfoInterface> = [...prevData];
+      const updatedFormData: ExperienceInfoInterface[] = [...prevData];
       updatedFormData[index] = { ...updatedFormData[index], [name]: value };
       return updatedFormData;
     });
@@ -39,9 +45,10 @@ export const ExperienceSection: React.FC = () => {
 
   const addMoreExperiences = () => {
     setFormData((prevData) => {
-      const updatedFormData: Array<ExperienceInfoInterface> = [
+      const updatedFormData: ExperienceInfoInterface[] = [
         ...prevData,
         {
+          id: crypto.randomUUID(),
           jobName: "",
           companyName: "",
           responsibilities: "",
@@ -53,7 +60,19 @@ export const ExperienceSection: React.FC = () => {
       return updatedFormData;
     });
   };
-  
+  const getDescriptionFromOpenRouter = (output: string, index: number) => {
+    console.log("Output in exp section : ", output);
+
+    setFormData((prevData) => {
+      const updatedFormData = [...prevData];
+      updatedFormData[index] = {
+        ...updatedFormData[index],
+        responsibilities: output,
+      };
+      return updatedFormData;
+    });
+  };
+
   const [checked, setChecked] = useState<boolean>(false);
   return (
     <AnimatePresence mode="wait">
@@ -61,6 +80,7 @@ export const ExperienceSection: React.FC = () => {
         <motion.form
           onSubmit={(e) => {
             e.preventDefault();
+            addExperiences(formData);
             incrementCurrentIndex();
           }}
           key={"education-section"}
@@ -80,13 +100,19 @@ export const ExperienceSection: React.FC = () => {
           {formData.map((element, index) => {
             return (
               <div
-                key={index}
+                key={element.id}
                 className="grid gap-y-5 gap-x-20 grid-cols-3 mt-3"
               >
                 <FormTextField
                   name={"jobName"}
                   changeHandler={(e) => changeEventHandler(e, index)}
-                  value={element.jobName}
+                  value={
+                    experiences.find(
+                      (experienceItem) => experienceItem.id === element.id
+                    )?.jobName !== "" ? experiences.find(
+                      (experienceItem) => experienceItem.id === element.id
+                    )?.jobName! : element.jobName
+                  }
                   type="text"
                   label={"Job name"}
                   placeholder={"E.g. Software Developer..."}
@@ -94,7 +120,13 @@ export const ExperienceSection: React.FC = () => {
                 <FormTextField
                   name={"companyName"}
                   changeHandler={(e) => changeEventHandler(e, index)}
-                  value={element.companyName}
+                  value={
+                    experiences.find(
+                      (experienceItem) => experienceItem.id === element.id
+                    )?.companyName !== "" ? experiences.find(
+                      (experienceItem) => experienceItem.id === element.id
+                    )?.companyName! : element.companyName
+                  }
                   type="text"
                   label={"Company name"}
                   placeholder={"E.g. XYZ Company Ltd."}
@@ -102,7 +134,13 @@ export const ExperienceSection: React.FC = () => {
                 <FormTextField
                   name={"location"}
                   changeHandler={(e) => changeEventHandler(e, index)}
-                  value={element.location ?? ""}
+                  value={
+                    experiences.find(
+                      (experienceItem) => experienceItem.id === element.id
+                    )?.location !== "" ? experiences.find(
+                      (experienceItem) => experienceItem.id === element.id
+                    )?.location! : element.location!
+                  }
                   type="text"
                   label={"Company location"}
                   placeholder={"E.g. India..."}
@@ -111,7 +149,13 @@ export const ExperienceSection: React.FC = () => {
                   <FormTextField
                     name={"startDate"}
                     changeHandler={(e) => changeEventHandler(e, index)}
-                    value={element.startDate}
+                    value={
+                      experiences.find(
+                        (experienceItem) => experienceItem.id === element.id
+                      )?.startDate !== "" ? experiences.find(
+                        (experienceItem) => experienceItem.id === element.id
+                      )?.startDate! : element.startDate
+                    }
                     type="date"
                     label={"Start date"}
                     placeholder={"Job started on..."}
@@ -147,12 +191,18 @@ export const ExperienceSection: React.FC = () => {
                 <FormTextField
                   name={"endDate"}
                   changeHandler={(e) => changeEventHandler(e, index)}
-                  value={element.endDate}
+                  value={
+                    experiences.find(
+                      (experienceItem) => experienceItem.id === element.id
+                    )?.endDate !== "" ? experiences.find(
+                      (experienceItem) => experienceItem.id === element.id
+                    )?.endDate! : element.endDate
+                  }
                   type="date"
                   label={"End date"}
                   placeholder={"Job will end on..."}
                 />
-                <div className="">
+                <div>
                   <p className="text-sm font-semibold font-poppins">
                     Responsibilities
                   </p>
@@ -161,8 +211,23 @@ export const ExperienceSection: React.FC = () => {
                     onChange={(e) => changeEventHandler(e, index)}
                     className="border border-zinc-400 rounded-lg px-3 py-2 resize-none"
                     placeholder="Your contribution in the company..."
-                    value={element.responsibilities}
+                    value={
+                      experiences.find(
+                        (experienceItem) => experienceItem.id === element.id
+                      )?.responsibilities !== "" ? experiences.find(
+                        (experienceItem) => experienceItem.id === element.id
+                      )?.responsibilities! : element.responsibilities
+                    }
                     name="responsibilities"
+                  />
+
+                  <GenerateWithAIButton
+                    index={index}
+                    contentTypeToGenerate="job"
+                    prompt={element.jobName}
+                    callback={getDescriptionFromOpenRouter}
+                    text="Generate with AI"
+                    icon={<FaMagic />}
                   />
                 </div>
               </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import {
   FaRegArrowAltCircleLeft,
@@ -8,16 +8,31 @@ import { SecondaryButton } from "../../../components/SecondaryButton";
 import { ProceedButton } from "./common/ProceedButton";
 import { useResumeSectionIndexStore } from "../../../stores/useResumeSectionIndexStore";
 import { Skills, Achievements } from "../exports/components/exports";
+import { SkillInterface } from "../interfaces/skillsInterface";
+import { AchievementsInterface } from "../interfaces/achievementsInterface";
+import { useSkillsStore } from "../../../stores/useSkillsStore";
+import { useAchievementsStore } from "../../../stores/useAchievementsStore";
 
 export const SkillsAndAchievements: React.FC = () => {
-  const { currentIndex, decrementCurrentIndex, incrementCurrentIndex } = useResumeSectionIndexStore();
-  
+  const { currentIndex, decrementCurrentIndex, incrementCurrentIndex } =
+    useResumeSectionIndexStore();
+  const { addSkills } = useSkillsStore();
+  const { addAchievements } = useAchievementsStore();
+  const [skillFormData, setSkillFormData] = useState<SkillInterface[]>();
+  const [achievementFormData, setAchievementFormData] =
+    useState<AchievementsInterface[]>();
+
+  const getSkillsData = (info: SkillInterface[]) => setSkillFormData(info);
+  const getAchievementsData = (info: AchievementsInterface[]) =>
+    setAchievementFormData(info);
   return (
     <AnimatePresence mode="wait">
       {currentIndex === 2 && (
         <motion.form
           onSubmit={(e) => {
             e.preventDefault();
+            addSkills(skillFormData!);
+            addAchievements(achievementFormData!);
             incrementCurrentIndex();
           }}
           key={"education-section"}
@@ -35,8 +50,8 @@ export const SkillsAndAchievements: React.FC = () => {
         >
           <h1 className="text-2xl font-semibold">Skills and Achievements</h1>
           <div className="flex gap-x-40 px-3 py-2">
-            <Skills />
-            <Achievements />
+            <Skills callback={getSkillsData} />
+            <Achievements callback={getAchievementsData} />
           </div>
           <div className="flex justify-end gap-x-2 mt-3 ">
             <SecondaryButton

@@ -8,10 +8,11 @@ import { SecondaryButton } from "../../../components/SecondaryButton";
 import { GenerateWithAIButton } from "./common/GenerateWithAI";
 import { AnimatePresence, motion } from "motion/react";
 import { useResumeSectionIndexStore } from "../../../stores/useResumeSectionIndexStore";
+import { useBasicInfoStore } from "../../../stores/useBasicInfoStore";
 
 export const BasicInfo: React.FC = () => {
   const { currentIndex, incrementCurrentIndex } = useResumeSectionIndexStore();
-  
+  const {info, addInfo} = useBasicInfoStore();
   const [display, setDisplay] = useState<boolean>(true);
   const [formData, setFormData] = useState<BasicInfoInterface>({
     fullName: "",
@@ -21,6 +22,13 @@ export const BasicInfo: React.FC = () => {
     location: "",
     address: "",
   });
+
+  const getDescriptionFromOpenRouter = (output: string) => {   
+    setFormData((prevData) => {
+      const updatedFormData  = {...prevData, description: output};
+      return updatedFormData;
+    })
+  }
 
   const textFieldElements: Array<FormFieldInterface> = [
     {
@@ -90,6 +98,7 @@ export const BasicInfo: React.FC = () => {
       {display && (
         <motion.form
         onSubmit={(e) => {e.preventDefault();
+          addInfo(formData);
           incrementCurrentIndex();
         }}
           key="basic-info"
@@ -109,13 +118,13 @@ export const BasicInfo: React.FC = () => {
                 <FormTextField
                   name={element.name}
                   changeHandler={changeEventHandler}
-                  value={element.value ?? ""}
+                  value={info[element.name as keyof BasicInfoInterface] !== "" ? info[element.name as keyof BasicInfoInterface] : element.value!}
                   type={element.type}
                   label={element.label}
                   placeholder={element.placeholder}
                 />
                 {index === 1 && (
-                  <GenerateWithAIButton
+                  <GenerateWithAIButton index={0} contentTypeToGenerate="personal" prompt={formData.jobTitle} callback={getDescriptionFromOpenRouter}
                     text="Generate with AI"
                     icon={<FaMagic />}
                   />

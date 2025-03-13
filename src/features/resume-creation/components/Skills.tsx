@@ -4,14 +4,19 @@ import { FaPlus } from "react-icons/fa6";
 import { SkillInterface } from "../exports/interfaces/exports";
 import { CustomDropDown } from "../../../components/CustomDropDown";
 import { MoreButton } from "../../../components/MoreButton";
+import { useSkillsStore } from "../../../stores/useSkillsStore";
 
-export const Skills: React.FC = () => {
+
+
+export const Skills: React.FC<{callback: (info: SkillInterface[]) => void;}> = ({callback}) => {
   const [formData, setFormData] = useState<Array<SkillInterface>>([
     {
+      id: crypto.randomUUID(),
       name: "",
       level: "",
     },
   ]);
+  const {skills} = useSkillsStore();
   const changeEventHandler = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
     const { name, value } = e.target;
     setFormData((prevData) => {
@@ -19,6 +24,7 @@ export const Skills: React.FC = () => {
       updatedFormData[index] = {...updatedFormData[index], [name]: value};
       return updatedFormData;
     });
+    callback(formData);
   };
 
   const addMoreSkills = () => {
@@ -28,6 +34,7 @@ export const Skills: React.FC = () => {
       const updatedFormData = [
         ...prevData,
         {
+          id: crypto.randomUUID(),
           name: "",
           level: "",
         },
@@ -45,13 +52,13 @@ export const Skills: React.FC = () => {
       <h1 className="text-xl font-semibold">Skills</h1>
       {formData.map((skill, index) => {
         return (
-          <div key={index} className="flex items-end gap-x-3 mb-5">
+          <div key={skill.id} className="flex items-end gap-x-3 mb-5">
             <FormTextField
               name="name"
               label="Skill"
               placeholder="E.g. Digital Marketing etc."
               type="text"
-              value={skill.name}
+              value={skills.find((skillItem) => skillItem.id === skill.id)?.name !== "" ? skills.find((skillItem) => skillItem.id === skill.id)?.name! : skill.name}
               changeHandler={(e) => changeEventHandler(e, index)}
             />
             <CustomDropDown items={["Beginner", "Intermediate", "Advanced"]} />

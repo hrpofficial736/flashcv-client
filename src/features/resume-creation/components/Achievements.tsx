@@ -3,57 +3,88 @@ import { FormTextField } from "../../../components/FormTextField";
 import { FaPlus } from "react-icons/fa6";
 import { AchievementsInterface } from "../exports/interfaces/exports";
 import { MoreButton } from "../../../components/MoreButton";
+import { useAchievementsStore } from "../../../stores/useAchievementsStore";
 
-export const Achievements: React.FC = () => {
+export const Achievements: React.FC<{
+  callback: (info: AchievementsInterface[]) => void;
+}> = ({ callback }) => {
+  const { achievements } = useAchievementsStore();
   const [formData, setFormData] = useState<Array<AchievementsInterface>>([
     {
+      id: crypto.randomUUID(),
       name: "",
       description: "",
       date: "",
     },
   ]);
-  const changeEventHandler = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
+  const changeEventHandler = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number
+  ) => {
     const { name, value } = e.target;
     setFormData((prevData) => {
-      const updatedFormData : Array<AchievementsInterface> = [...prevData];
-      updatedFormData[index] = {...updatedFormData[index], [name]: value};
+      const updatedFormData: Array<AchievementsInterface> = [...prevData];
+      updatedFormData[index] = { ...updatedFormData[index], [name]: value };
       return updatedFormData;
     });
+    callback(formData);
   };
   const addMoreAchievements = () => {
     setFormData((prevData) => {
       const updatedFormData: Array<AchievementsInterface> = [
         ...prevData,
-        { name: "", description: "", date: "" },
+        { id: crypto.randomUUID(), name: "", description: "", date: "" },
       ];
       return updatedFormData;
     });
   };
+
   return (
     <section className="flex flex-col gap-y-3 font-poppins">
       <h1 className="text-xl font-semibold">Achievements</h1>
       {formData.map((achievement, index) => {
         return (
-          <div className="flex flex-col gap-y-5 mb-5" key={index}>
+          <div className="flex flex-col gap-y-5 mb-5" key={achievement.id}>
             <FormTextField
               name="name"
               label="Achievement"
               placeholder="E.g. Digital Marketing etc."
               type="text"
-              value={achievement.name}
+              value={
+                achievements.find(
+                  (achievementItem) => achievementItem.id === achievement.id
+                )?.name !== ""
+                  ? achievements.find(
+                      (achievementItem) => achievementItem.id === achievement.id
+                    )?.name!
+                  : achievement.name
+              }
               changeHandler={(e) => changeEventHandler(e, index)}
             />
             <FormTextField
               placeholder="Describe your achievement..."
-              value={achievement.description}
+              value={
+                achievements.find(
+                  (achievementItem) => achievementItem.id === achievement.id
+                )?.description !== "" ? achievements.find(
+                  (achievementItem) => achievementItem.id === achievement.id
+                )?.description! : achievement.description
+              }
               name="description"
               label="Description"
               type="text"
               changeHandler={(e) => changeEventHandler(e, index)}
             />
+
             <FormTextField
               placeholder="Date of achievement..."
-              value={achievement.date}
+              value={
+                achievements.find(
+                  (achievementItem) => achievementItem.id === achievement.id
+                )?.date !== "" ? achievements.find(
+                  (achievementItem) => achievementItem.id === achievement.id
+                )?.date! : achievement.date
+              }
               name="date"
               label="Date of achievement"
               type="date"
