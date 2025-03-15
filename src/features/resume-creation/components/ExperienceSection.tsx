@@ -37,6 +37,8 @@ export const ExperienceSection: React.FC = () => {
     index: number
   ) => {
     const { name, value } = e.target;
+    console.log(name, value);
+    
     setFormData((prevData) => {
       const updatedFormData: ExperienceInfoInterface[] = [...prevData];
       updatedFormData[index] = { ...updatedFormData[index], [name]: value };
@@ -64,14 +66,11 @@ export const ExperienceSection: React.FC = () => {
   const getDescriptionFromOpenRouter = (output: string, index: number) => {
     console.log("Output in exp section : ", output);
 
-    setFormData((prevData) => {
-      const updatedFormData = [...prevData];
-      updatedFormData[index] = {
-        ...updatedFormData[index],
-        responsibilities: output,
-      };
-      return updatedFormData;
-    });
+    setFormData((prevData) =>
+      prevData.map((item, i) =>
+        i === index ? { ...item, responsibilities: output } : item
+      )
+    );
   };
 
   const [checked, setChecked] = useState<boolean>(false);
@@ -112,11 +111,7 @@ export const ExperienceSection: React.FC = () => {
                   value={
                     experiences.find(
                       (experienceItem) => experienceItem.id === element.id
-                    )?.jobName !== ""
-                      ? experiences.find(
-                          (experienceItem) => experienceItem.id === element.id
-                        )?.jobName!
-                      : element.jobName
+                    )?.jobName || element.jobName
                   }
                   type="text"
                   label={"Job name"}
@@ -128,11 +123,7 @@ export const ExperienceSection: React.FC = () => {
                   value={
                     experiences.find(
                       (experienceItem) => experienceItem.id === element.id
-                    )?.companyName !== ""
-                      ? experiences.find(
-                          (experienceItem) => experienceItem.id === element.id
-                        )?.companyName!
-                      : element.companyName
+                    )?.companyName || element.companyName
                   }
                   type="text"
                   label={"Company name"}
@@ -144,11 +135,7 @@ export const ExperienceSection: React.FC = () => {
                   value={
                     experiences.find(
                       (experienceItem) => experienceItem.id === element.id
-                    )?.location !== ""
-                      ? experiences.find(
-                          (experienceItem) => experienceItem.id === element.id
-                        )?.location!
-                      : element.location!
+                    )?.location || element.location!
                   }
                   type="text"
                   label={"Company location"}
@@ -161,11 +148,7 @@ export const ExperienceSection: React.FC = () => {
                     value={
                       experiences.find(
                         (experienceItem) => experienceItem.id === element.id
-                      )?.startDate !== ""
-                        ? experiences.find(
-                            (experienceItem) => experienceItem.id === element.id
-                          )?.startDate!
-                        : element.startDate
+                      )?.startDate || element.startDate
                     }
                     type="date"
                     label={"Start date"}
@@ -205,11 +188,7 @@ export const ExperienceSection: React.FC = () => {
                   value={
                     experiences.find(
                       (experienceItem) => experienceItem.id === element.id
-                    )?.endDate !== ""
-                      ? experiences.find(
-                          (experienceItem) => experienceItem.id === element.id
-                        )?.endDate!
-                      : element.endDate
+                    )?.endDate || element.endDate
                   }
                   type="date"
                   label={"End date"}
@@ -225,13 +204,8 @@ export const ExperienceSection: React.FC = () => {
                     className="border border-zinc-400 rounded-lg px-3 py-2 resize-none"
                     placeholder="Your contribution in the company..."
                     value={
-                      experiences.find(
-                        (experienceItem) => experienceItem.id === element.id
-                      )?.responsibilities !== ""
-                        ? experiences.find(
-                            (experienceItem) => experienceItem.id === element.id
-                          )?.responsibilities!
-                        : element.responsibilities
+                      experiences.find((item) => item.id === element.id)
+                        ?.responsibilities || element.responsibilities
                     }
                     name="responsibilities"
                   />

@@ -1,10 +1,18 @@
 import { AnimatePresence, motion } from "motion/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 
-export const CustomDropDown: React.FC<{ items: string[] }> = ({ items }) => {
+export const CustomDropDown: React.FC<{
+  items: string[];
+  callback: (selectedValue: string, index: number) => void;
+  dropDownIndex: number;
+}> = ({ items, callback, dropDownIndex }) => {
   const [open, setOpen] = useState<boolean>(false);
   const [selectedValue, setSelectedValue] = useState<string>(items[0]);
+
+  useEffect(() => {
+    callback(selectedValue, dropDownIndex);
+  }, [selectedValue])
   return (
     <div className="relative w-56">
       <div
