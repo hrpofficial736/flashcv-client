@@ -8,8 +8,12 @@ interface ExperiencesStore {
 
 export const useExperiencesStore = create<ExperiencesStore>((set) => ({
   experiences: [],
-  addExperiences: (experiences) =>
-    set((state) => ({
-      experiences: [...state.experiences, ...experiences],
-    })),
+  addExperiences: (newExperiences) =>
+    set((state) => {
+      const mergedExperiences : ExperienceInfoInterface[] = [...state.experiences, ...newExperiences];
+
+      const updatedExperiences : ExperienceInfoInterface[] = Array.from(new Map(mergedExperiences.map((exp) => [exp.id, exp])).values());
+
+      return {experiences: updatedExperiences};
+    }),
 }));

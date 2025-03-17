@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useResumeSectionIndexStore } from "../../../stores/useResumeSectionIndexStore";
 import { ExperienceInfoInterface } from "../interfaces/experienceInfoInterface";
 import { AnimatePresence, motion } from "motion/react";
@@ -32,13 +32,21 @@ export const ExperienceSection: React.FC = () => {
     },
   ]);
 
+  useEffect(() => {
+    if (experiences.length !== 0) {
+      console.log(experiences);
+
+      setFormData(() => experiences);
+    }
+  }, []);
+
   const changeEventHandler = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     index: number
   ) => {
     const { name, value } = e.target;
     console.log(name, value);
-    
+
     setFormData((prevData) => {
       const updatedFormData: ExperienceInfoInterface[] = [...prevData];
       updatedFormData[index] = { ...updatedFormData[index], [name]: value };
@@ -222,11 +230,20 @@ export const ExperienceSection: React.FC = () => {
               </div>
             );
           })}
-          <MoreButton
-            onPressed={addMoreExperiences}
-            text="Add more experiences"
-            icon={<FaPlus />}
-          />
+          <div className="flex flex-col items-end gap-y-4">
+            <MoreButton
+              onPressed={addMoreExperiences}
+              icon={<FaPlus />}
+              text="Add more achievements"
+            />
+            <ProceedButton
+              type="button"
+              onPressed={() => {
+                addExperiences(formData);
+              }}
+              text="Save"
+            />
+          </div>
           <div className="flex justify-end gap-x-2 mt-3">
             <SecondaryButton
               text="Previous Step"

@@ -79,18 +79,18 @@ export const Achievements: React.FC = () => {
           </div>
         );
       })}
-      <div className="flex flex-col items-end">
+      <div className="flex flex-col items-end gap-y-8">
               <MoreButton
                 onPressed={addMoreAchievements}
                 icon={<FaPlus />}
-                text="Add more skills"
+                text="Add more achievements"
               />
               <ProceedButton
                 type="button"
                 onPressed={() => {
                   addAchievements(formData);
                 }}
-                text="Save achievements"
+                text="Save"
               />
             </div>
     </section>

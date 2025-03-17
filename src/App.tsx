@@ -8,6 +8,7 @@ import {
   RegisterPage,
   ResumePage,
 } from "./exports/pages/exports";
+import { Main } from "./features/resume-creation/components/pdf/Main";
 
 const App: React.FC = () => {
   return (
@@ -18,6 +19,7 @@ const App: React.FC = () => {
       <Route element={<ProcessingPage />} path="/auth/callback" />
       <Route element={<DashboardPage />} path="/:username/dashboard" />
       <Route element={<ResumePage />} path="/:username/build-resume" />
+      <Route element={<Main />} path="/test" />
     </Routes>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { useResumeSectionIndexStore } from "../../../stores/useResumeSectionIndexStore";
 import { ContactInfoInterface } from "../exports/interfaces/exports";
@@ -23,6 +23,10 @@ export const ContactInfo: React.FC = () => {
     socials: [""],
   });
 
+  useEffect(() => {
+    if (contactInfo.socials?.length !== 0) setFormData(contactInfo);
+  }, []);
+
   const addMoreSocials = () => {
     setFormData((prevData) => {
       const updatedFormdata: ContactInfoInterface = {
@@ -39,10 +43,11 @@ export const ContactInfo: React.FC = () => {
     const { name, value } = e.target;
     setFormData((prevData) => {
       if (name === "socials") {
-        const updatedFormData = {
-          ...prevData,
-          [name]: [...prevData.socials![index!], value],
-        };
+        console.log("yes name is", name);
+        
+        const updatedFormData : ContactInfoInterface = {...prevData};
+        updatedFormData.socials![index!] = value;
+        console.log(updatedFormData);
         return updatedFormData;
       }
       const updatedFormData = { ...prevData, [name]: value };
@@ -80,11 +85,7 @@ export const ContactInfo: React.FC = () => {
               <FormTextField
                 changeHandler={changeEventHandler}
                 name="phoneNo"
-                value={
-                  contactInfo.phoneNo !== ""
-                    ? contactInfo.phoneNo
-                    : formData.phoneNo
-                }
+                value={formData.phoneNo}
                 type="tel"
                 label="Phone number"
                 placeholder="E.g. 1234567890"
@@ -93,7 +94,7 @@ export const ContactInfo: React.FC = () => {
               <FormTextField
                 changeHandler={changeEventHandler}
                 name="email"
-                value={contactInfo.email ?? formData.email}
+                value={formData.email}
                 type="email"
                 label="Email"
                 placeholder="E.g. xyz@example.com"
@@ -108,17 +109,26 @@ export const ContactInfo: React.FC = () => {
                     key={index}
                     name="socials"
                     type="text"
-                    changeHandler={changeEventHandler}
-                    value={contactInfo.socials![index] ?? link}
+                    changeHandler={(e) => changeEventHandler(e, index)}
+                    value={link}
                     placeholder="http://my-social-profile.xyz"
                   />
                 );
               })}
-              <MoreButton
-                onPressed={addMoreSocials}
-                text="Add more socials"
-                icon={<FaPlus />}
-              />
+              <div className="flex flex-col items-end gap-y-8">
+                <MoreButton
+                  onPressed={addMoreSocials}
+                  icon={<FaPlus />}
+                  text="Add more socials"
+                />
+                <ProceedButton
+                  type="button"
+                  onPressed={() => {
+                    addContact(formData);
+                  }}
+                  text="Save"
+                />
+              </div>
             </div>
           </div>
           <div className="flex max-lg:flex-col max-lg:gap-y-4 justify-center lg:justify-end gap-x-2 mt-3">

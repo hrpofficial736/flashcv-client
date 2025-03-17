@@ -25,13 +25,13 @@ const ResumePage: React.FC = () => {
     <ContactInfo />,
     <PreviewAndSave />,
   ];
-  // useEffect(() => {
-  //   async function checkForSession() {
-  //     const session = await getSession(username!);
-  //     if (!session) navigate("/login");
-  //   }
-  //   checkForSession();
-  // }, []);
+  useEffect(() => {
+    async function checkForSession() {
+      const session = await getSession(username!);
+      if (!session) navigate("/login");
+    }
+    checkForSession();
+  }, []);
   return (
     <main className="px-3 py-2 font-poppins w-screen h-screen">
       <img src={Logo} className="w-36 h-10" />

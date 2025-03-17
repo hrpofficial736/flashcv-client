@@ -17,11 +17,11 @@ export const Timeline: React.FC = () => {
   }, []);
 
   const sliderWidth = isLargeScreen ? currentIndex * 20 : 10;
-  const sliderHeight = isLargeScreen ? 1 : currentIndex * 20;
+  const sliderHeight = isLargeScreen ? 10 : currentIndex * 20;
 
   return (
-    <section className="relative w-fit h-[500px] lg:h-10 max-lg:mt-10 lg:m-10 flex flex-col justify-center lg:flex-row items-center">
-      <div className="h-full w-1 lg:h-1 bg-orange-100 rounded-2xl absolute lg:top-1/2 lg:left-0 lg:right-0 lg:-translate-y-1/2"></div>
+    <section className="relative max-lg:w-fit h-[500px] lg:h-10 max-lg:mt-10 lg:m-10 flex flex-col justify-center lg:flex-row items-center">
+      <div className="h-full max-lg:w-1 lg:h-1 bg-orange-100 rounded-2xl absolute lg:top-1/2 lg:left-0 lg:right-0 lg:-translate-y-1/2"></div>
 
       {/* Animated Progress Bar */}
       <motion.div
