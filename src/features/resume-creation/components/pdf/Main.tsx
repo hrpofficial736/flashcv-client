@@ -5,11 +5,14 @@ import {
   StyleSheet,
   PDFViewer,
   Font,
+  View,
 } from "@react-pdf/renderer";
 import { Header } from "./Header";
 import { Summary } from "./Summary";
 import { Experience } from "./Experience";
 import { Education } from "./Education";
+import { Skills } from "./Skills";
+import { Achievements } from "./Achievements";
 
 Font.register({
   family: "Poppins",
@@ -34,9 +37,42 @@ export const Main: React.FC = () => {
       <Document>
         <Page style={styles.page} size={"A4"}>
           <Header />
-          <Summary />
-          <Experience />
-          <Education />
+          <View
+            style={{
+              width: "100%",
+              height: "80%",
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+              marginTop: 10,
+              paddingTop: 10,
+              columnGap: 140,
+            }}
+          >
+            <View
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                width: "80%"
+              }}
+            >
+              <Summary />
+              <Experience />
+              <Education />
+            </View>
+            <View
+              style={{
+                width: "70%",
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+                rowGap: 20
+              }}
+            >
+              <Skills />
+              <Achievements />
+            </View>
+          </View>
         </Page>
       </Document>
     </PDFViewer>

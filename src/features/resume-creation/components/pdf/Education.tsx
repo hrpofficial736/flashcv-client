@@ -3,15 +3,15 @@ import {View, Text, StyleSheet} from '@react-pdf/renderer';
 
 const experienceStyles = StyleSheet.create({
   view: {
-    width: 360,
+    width: 320,
     height: 100,
     display: "flex",
     flexDirection: "column",
     marginTop: 20,
   },
-  bar: { width: 350, height: 2, backgroundColor: "black", borderRadius: 10 },
+  bar: { width: 320, height: 2, backgroundColor: "black", borderRadius: 10 },
   lightBar: {
-    width: 350,
+    width: 320,
     height: 0.2,
     backgroundColor: "gray",
     borderRadius: 10,
@@ -37,7 +37,7 @@ const experienceStyles = StyleSheet.create({
     fontSize: 10,
   },
   text: {
-    width: 350,
+    width: 320,
     fontFamily: "Poppins",
     color: "black",
     fontSize: 9,

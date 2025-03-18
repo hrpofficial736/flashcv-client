@@ -3,13 +3,12 @@ import { View, Text, StyleSheet } from "@react-pdf/renderer";
 
 const summaryStyles = StyleSheet.create({
   view: {
-    width: 360,
+    width: 320,
     height: 100,
     display: "flex",
     flexDirection: "column",
-    marginTop: 20,
   },
-  bar: { width: 350, height: 2, backgroundColor: "black", borderRadius: 10 },
+  bar: { width: 320, height: 2, backgroundColor: "black", borderRadius: 10 },
   headingText: {
     fontFamily: "Poppins",
     fontWeight: 600,
@@ -17,7 +16,7 @@ const summaryStyles = StyleSheet.create({
     fontSize: 15,
   },
   text: {
-    width: 350,
+    width: 320,
     fontFamily: "Poppins",
     color: "black",
     fontSize: 9,
