@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet } from "@react-pdf/renderer";
+import { useBasicInfoStore } from "../../../../stores/useBasicInfoStore";
 
 const summaryStyles = StyleSheet.create({
   view: {
@@ -26,16 +27,14 @@ const summaryStyles = StyleSheet.create({
 });
 
 export const Summary: React.FC = () => {
+  const summary = useBasicInfoStore((state) => state.info.description);
   return (
     <View style={summaryStyles.view}>
       <Text style={summaryStyles.headingText}>SUMMARY</Text>
       <View style={summaryStyles.bar}></View>
       
       <Text style={summaryStyles.text}>
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Assumenda
-        voluptates doloribus doloremque aut eum reiciendis eveniet,
-        necessitatibus facilis quibusdam ad, molestiae minus quaerat modi,
-        tempora libero laudantium! Modi, soluta reprehenderit.
+        {summary}
       </Text>
     </View>
   );

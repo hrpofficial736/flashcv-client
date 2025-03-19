@@ -7,7 +7,7 @@ import {
   Timeline,
   EducationSection,
   ExperienceSection,
-  PreviewAndSave,
+  SaveAndDownload,
   ContactInfo,
   SkillsAndAchievements,
 } from "../exports/components/exports";
@@ -23,7 +23,7 @@ const ResumePage: React.FC = () => {
     <SkillsAndAchievements />,
     <ExperienceSection />,
     <ContactInfo />,
-    <PreviewAndSave />,
+    <SaveAndDownload />,
   ];
   useEffect(() => {
     async function checkForSession() {

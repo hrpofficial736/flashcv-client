@@ -10,6 +10,14 @@
     display: none
 }
 
+.no-scrollbar::-webkit-scrollbar {
+    display: none
+}
+
+iframe::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+
 .row-center-flex {
     @apply flex justify-center items-center;
 }

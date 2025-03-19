@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router";
 import React, { useEffect } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { PuffLoader } from "react-spinners";
 import removeHashFromUrl from "../../../utils/helpers/removeHashFromUrl";
 import { useAuthService } from "../services/authService";
 import { useUserStore } from "../../../stores/useUserStore";
 import { GlobalUser } from "../../../utils/interfaces/globalUserInterface";
 import { supabaseClient } from "../../../services/supabaseClient";
+import { Loader } from "../../../components/Loader";
 
 export const Processor: React.FC = () => {
   const navigate = useNavigate();
@@ -47,11 +47,6 @@ export const Processor: React.FC = () => {
     getSession();
   }, []);
   return (
-    <div className="column-center-flex gap-y-2">
-      <PuffLoader />
-      <h1 className="text-xl font-poppins font-semibold text-black/60">
-        Hang on...
-      </h1>
-    </div>
+    <Loader />
   );
 };

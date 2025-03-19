@@ -1,5 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, Image } from "@react-pdf/renderer";
+import { useBasicInfoStore } from "../../../../stores/useBasicInfoStore";
+import { useContactInfoStore } from "../../../../stores/useContactInfoStore";
 
 const headerStyles = StyleSheet.create({
   header: {display: "flex", flexDirection: "column", gap: 2},
@@ -25,9 +27,11 @@ const headerStyles = StyleSheet.create({
 });
 
 export const Header: React.FC = () => {
+  const basicInfo = useBasicInfoStore((state) => state.info);
+  const contactInfo = useContactInfoStore((state) => state.contactInfo);
   return (
     <View>
-      <Text style={headerStyles.text}>Harshit Raj Pandey</Text>
+      <Text style={headerStyles.text}>{basicInfo.fullName}</Text>
       <Text
         style={{
           color: "orange",
@@ -37,7 +41,7 @@ export const Header: React.FC = () => {
           fontFamily: "Poppins",
         }}
       >
-        Software Developer
+        {basicInfo.jobTitle}
       </Text>
       <View style={headerStyles.phoneEmailView}>
         <View style={headerStyles.iconElement}>
@@ -55,7 +59,7 @@ export const Header: React.FC = () => {
               fontFamily: "Poppins"
             }}
           >
-            +91-9810180956
+            {contactInfo.phoneNo}
           </Text>
         </View>
         <View style={headerStyles.iconElement}>
@@ -73,7 +77,7 @@ export const Header: React.FC = () => {
               fontFamily: "Poppins"
             }}
           >
-            hrpofficial736@gmail.com
+            {contactInfo.email}
           </Text>
         </View>
       </View>

@@ -1,5 +1,6 @@
-import React from 'react';
-import { StyleSheet, View, Text } from '@react-pdf/renderer';
+import React from "react";
+import { StyleSheet, View, Text } from "@react-pdf/renderer";
+import { useSkillsStore } from "../../../../stores/useSkillsStore";
 
 const skillsStyles = StyleSheet.create({
   view: {
@@ -25,18 +26,21 @@ const skillsStyles = StyleSheet.create({
   },
 });
 
-export const Skills : React.FC = () => {
+export const Skills: React.FC = () => {
+  const skills = useSkillsStore((state) => state.skills);
   return (
     <View style={skillsStyles.view}>
       <Text style={skillsStyles.headingText}>SKILLS</Text>
       <View style={skillsStyles.bar}></View>
-
-      <Text style={skillsStyles.text}>• HTML</Text>
-      <Text style={skillsStyles.text}>• HTML</Text>
-      <Text style={skillsStyles.text}>• HTML</Text>
-      <Text style={skillsStyles.text}>• HTML</Text>
-      <Text style={skillsStyles.text}>• HTML</Text>
+      {skills.map((skill, index) => {
+        return (
+          <div key={index}>
+            <Text style={skillsStyles.text}>
+              • {skill.name} ({skill.level})
+            </Text>
+          </div>
+        );
+      })}
     </View>
   );
-}
-
+};

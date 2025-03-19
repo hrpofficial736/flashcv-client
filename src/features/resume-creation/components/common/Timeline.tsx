@@ -23,12 +23,11 @@ export const Timeline: React.FC = () => {
     <section className="relative max-lg:w-fit h-[500px] lg:h-10 max-lg:mt-10 lg:m-10 flex flex-col justify-center lg:flex-row items-center">
       <div className="h-full max-lg:w-1 lg:h-1 bg-orange-100 rounded-2xl absolute lg:top-1/2 lg:left-0 lg:right-0 lg:-translate-y-1/2"></div>
 
-      {/* Animated Progress Bar */}
       <motion.div
         className="lg:h-1 bg-orange-400 rounded-2xl absolute"
         initial={{ width: 0, height: 0 }}
         animate={{ width: `${sliderWidth}%`, height: `${sliderHeight}%` }}
-        transition={{ type: "spring", stiffness: 100, damping: 15 }}
+        transition={{ ease: "easeInOut", duration: 0.5 }}
         style={{
           left: isLargeScreen ? "0" : "50%",
           top: isLargeScreen ? "50%" : "0",
@@ -36,7 +35,6 @@ export const Timeline: React.FC = () => {
         }}
       />
 
-      {/* Timeline Circles */}
       <div className="flex flex-col h-full justify-between lg:flex-row w-full relative">
         {[0, 1, 2, 3, 4, 5].map((_, index) => (
           <TimelineCircles key={index} number={index + 1} />
