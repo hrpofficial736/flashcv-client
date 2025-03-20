@@ -10,19 +10,11 @@ export const useUserStore = create<GlobalUser & GlobalUserActions>((set) => ({
   avatarUrl: "",
   username: "",
   resumeCount: 0,
-
+  resumes: [],
   updateUser: (
-    name: string,
-    email: string,
-    username: string,
-    avatarUrl?: string,
-    resumeCount?: number,
+    resumes?: string[]
   ) =>
     set(() => ({
-      name: name,
-      email: email,
-      avatarUrl: avatarUrl,
-      username: username,
-      resumeCount: resumeCount,
+      resumes: resumes
     })),
 }));

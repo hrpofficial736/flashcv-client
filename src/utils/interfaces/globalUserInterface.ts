@@ -4,14 +4,11 @@ export interface GlobalUser {
   username: string;
   avatarUrl?: string;
   resumeCount?: number;
+  resumes?: string[];
 }
 
 export interface GlobalUserActions {
   updateUser: (
-    name: GlobalUser["name"],
-    email: GlobalUser["email"],
-    username: GlobalUser["username"],
-    avatar?: GlobalUser["avatarUrl"],
-    resumeCount?: GlobalUser["resumeCount"],
+    resumes?: GlobalUser["resumes"]
   ) => void;
 }

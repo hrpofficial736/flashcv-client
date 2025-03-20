@@ -3,16 +3,19 @@ import { AnimatePresence, motion } from "motion/react";
 import { useResumeSectionIndexStore } from "../../../stores/useResumeSectionIndexStore";
 import { Main } from "./pdf/Main";
 import { ProceedButton } from "./common/ProceedButton";
-import { PDFDownloadLink } from "@react-pdf/renderer";
+import { pdf, PDFDownloadLink } from "@react-pdf/renderer";
 import { ResumeDocument } from "./pdf/ResumeDocument";
 import { SecondaryButton } from "../../../components/SecondaryButton";
 import { Loader } from "../../../components/Loader";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
+import useResumeService from "../services/useResumeService";
 
 export const SaveAndDownload: React.FC = () => {
   const { currentIndex, decrementCurrentIndex } = useResumeSectionIndexStore();
   const [isPdfReady, setIsPdfReady] = useState<boolean>(false);
   const navigate = useNavigate();
+  const { username } = useParams<{ username: string }>();
+  const { uploadResume } = useResumeService();
   useEffect(() => {
     setTimeout(() => setIsPdfReady(true), 3000);
   }, []);
@@ -57,9 +60,22 @@ export const SaveAndDownload: React.FC = () => {
                   document={<ResumeDocument />}
                   fileName="resume.pdf"
                 >
-                  <ProceedButton onPressed={() => {
-                    navigate("/hrpofficial736/dashboard");
-                  }} text="Download PDF" />
+                  <ProceedButton
+                    onPressed={async () => {
+                      const blob = await pdf(<ResumeDocument />).toBlob();
+                      const file = new File(
+                        [blob],
+                        `${username}-resume-${Date.now()}`
+                      );
+                      const isResumeUploaded = await uploadResume(
+                        <ResumeDocument />,
+                        username!
+                      );
+                      if (isResumeUploaded)
+                        navigate("/hrpofficial736/dashboard");
+                    }}
+                    text="Download PDF"
+                  />
                 </PDFDownloadLink>
               </div>
             </div>
