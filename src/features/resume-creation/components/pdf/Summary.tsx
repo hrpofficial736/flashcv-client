@@ -5,7 +5,6 @@ import { useBasicInfoStore } from "../../../../stores/useBasicInfoStore";
 const summaryStyles = StyleSheet.create({
   view: {
     width: 320,
-    height: 100,
     display: "flex",
     flexDirection: "column",
   },

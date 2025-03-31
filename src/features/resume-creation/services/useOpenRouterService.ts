@@ -5,10 +5,12 @@ export default function useOpenRouterService() {
 }
 
 const generateText = async (text: string, type: "personal" | "job") => {
-    let content : string = "";
-    if (type === "personal") content = `Generate a description in 1st person like an intro not more than 20 words for this job title : ${text}`;
-    else content = `Generate a description for the job responsibilities in 1st person not more than 20 words for this job title : ${text}`
-    try {
+  let content: string = "";
+  if (type === "personal")
+    content = `Generate a description in 1st person like an intro not more than 20 words for this job title : ${text}`;
+  else
+    content = `Generate a description for the job responsibilities in 1st person not more than 20 words for this job title : ${text}`;
+  try {
     const response = await axios.post(
       import.meta.env.VITE_OPENROUTER_URI,
       {

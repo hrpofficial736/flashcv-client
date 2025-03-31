@@ -5,7 +5,6 @@ import { useSkillsStore } from "../../../../stores/useSkillsStore";
 const skillsStyles = StyleSheet.create({
   view: {
     width: 180,
-    height: 120,
     display: "flex",
     flexDirection: "column",
   },

@@ -1,11 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { Resume1, Resume2, Resume3, Resume4 } from "../../../exports/assets/exports";
+import {
+  Resume1,
+  Resume2,
+  Resume3,
+  Resume4,
+} from "../../../exports/assets/exports";
 import { motion } from "motion/react";
 import { UniversalButton } from "../../../components/UniversalButton";
 import { FaRocket } from "react-icons/fa6";
 import { Logo } from "../../../exports/assets/exports";
+import { useNavigate } from "react-router";
+import { SecondaryButton } from "../../../components/SecondaryButton";
+import { FaRegArrowAltCircleRight } from "react-icons/fa";
 
 export const Hero: React.FC = () => {
+  const navigate = useNavigate();
   const [displayImages, setDisplayImages] = useState<boolean>(
     window.innerWidth > 1024
   );
@@ -22,8 +31,8 @@ export const Hero: React.FC = () => {
     <section className="w-full h-[40%] lg:h-full px-7 py-5 rounded-bl-3xl rounded-br-3xl bg-gradient-to-b from-orange-50 to-orange-300 flex flex-col items-center justify-end lg:justify-center">
       <img
         src={Logo}
-        className={`absolute top-4 left-3 lg:top-5 lg:left-10 ${
-          displayImages ? "w-[140px] h-[40px]" : "w-[110px] h-[30px]"
+        className={`absolute top-0 left-0 ${
+          displayImages ? "w-[200px] h-[130px]" : "w-[110px] h-[30px]"
         }`}
       />
       <div className="z-20">
@@ -31,7 +40,7 @@ export const Hero: React.FC = () => {
           initial={{ opacity: 0, y: 100 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
-          className="text-2xl lg:text-7xl font-bold font-poppins text-black text-center"
+          className="text-2xl lg:text-7xl leading-20 font-bold font-poppins text-black text-center"
         >
           Create Your Resume in a Fla⚡h
         </motion.h1>
@@ -86,7 +95,25 @@ export const Hero: React.FC = () => {
           />
         </>
       )}
-      <UniversalButton text="Get Started" icon={<FaRocket />} />
+      <div className="mt-4">
+      {!localStorage.getItem("auth_access_token") ? (
+        <UniversalButton
+          onPressed={() => {
+            navigate("/login");
+          }}
+          text="Get Started"
+          icon={<FaRocket />}
+        />
+      ) : (
+        <SecondaryButton
+          onPressed={() => {
+            navigate(`/${localStorage.getItem("username")}/dashboard`);
+          }}
+          text="Go to Dashboard"
+          icon={<FaRegArrowAltCircleRight />}
+        />
+      )}
+      </div>
     </section>
   );
 };

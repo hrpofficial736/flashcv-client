@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import React, { useEffect } from "react";
 import { useAuthService } from "../services/authService";
 import { Loader } from "../../../components/Loader";
@@ -8,9 +8,8 @@ import removeHashFromUrl from "../../../utils/helpers/removeHashFromUrl";
 export const Processor: React.FC<{ provider: string }> = ({ provider }) => {
   const navigate = useNavigate();
   const { resumeCount, username } = useUserStore();
-  const { loginService, registerService, signInWithProviderService } =
+  const { signInWithProviderService } =
     useAuthService();
-  const location = useLocation();
 
   useEffect(() => {
     const fetchTokenAndSendToServices = async () => {
@@ -23,12 +22,6 @@ export const Processor: React.FC<{ provider: string }> = ({ provider }) => {
 
       if (!secretFromProvider) throw new Error("Token not found!");
       removeHashFromUrl();
-      if (location.state?.type) {
-        location.state?.type === "login"
-          ? await loginService(secretFromProvider)
-          : await registerService(secretFromProvider);
-        return;
-      }
      const responseFromService = await signInWithProviderService(provider!, secretFromProvider);
      console.log(responseFromService);
      

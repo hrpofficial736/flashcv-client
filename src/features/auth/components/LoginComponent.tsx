@@ -8,12 +8,12 @@ import {
 } from "../../../exports/components/exports";
 import { Link } from "react-router";
 import { FaXTwitter } from "react-icons/fa6";
-import { useNavigate } from "react-router";
-// import useSupabaseAuth from "../hooks/useSupabaseAuth";
+import { useAuthService } from "../services/authService";
+import { Loader } from "../../../components/Loader";
 
-export const LoginComponent: React.FC = () => {
-  const navigate = useNavigate();
-  // const { logInWithEmailPassword } = useSupabaseAuth();
+export const LoginComponent: React.FC<{ callback: () => void }> = ({ callback }) => {
+  const { loginService } = useAuthService();
+  const [showLoader, setShowLoader] = useState<boolean>(false);
   const [formData, setFormData] = useState<{
     email: string;
     password: string;
@@ -28,7 +28,10 @@ export const LoginComponent: React.FC = () => {
         [e.target.name]: e.target.value,
       };
     });
+
   return (
+    <>
+    {!showLoader ?
     <section className="lg:w-[60%] w-[90%] mx-auto h-[90%] column-center-flex">
       <div className="lg:px-7 lg:py-3 px-3 py-3 flex flex-col lg:w-[60%] gap-y-5">
         <div>
@@ -60,12 +63,9 @@ export const LoginComponent: React.FC = () => {
         <form
           onSubmit={async (e) => {
             e.preventDefault();
-            // const responseFromSupabseAuth =
-            //   await logInWithEmailPassword(formData);
-            // if (responseFromSupabseAuth)
-            //   navigate("/auth/callback", {
-            //     state: { type: "login", provider: "" },
-            //   });
+            callback();
+            setShowLoader(true);
+            await loginService(formData);
           }}
           className="flex flex-col gap-y-4"
         >
@@ -100,5 +100,8 @@ export const LoginComponent: React.FC = () => {
         </div>
       </div>
     </section>
+    : <div className="w-screen h-screen row-center-flex"><Loader /></div>
+    }
+        </>
   );
 };

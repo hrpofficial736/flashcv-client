@@ -11,10 +11,11 @@ import {
   SkillsAndAchievements,
 } from "../exports/components/exports";
 import { useResumeSectionIndexStore } from "../../../stores/useResumeSectionIndexStore";
+import { useUserStore } from "../../../stores/useUserStore";
+import useUserService from "../../dashboard/services/useUserService";
 
 const ResumePage: React.FC = () => {
   const navigate = useNavigate();
-  const {username} = useParams<{username: string}>();
   const currentSectionToDisplay = useResumeSectionIndexStore((state) => state.currentIndex);
   const sectionsArray: Array<ReactElement> = [
     <BasicInfo />,
@@ -24,13 +25,14 @@ const ResumePage: React.FC = () => {
     <ContactInfo />,
     <SaveAndDownload />,
   ];
-  useEffect(() => {
-    async function checkForSession() {
-      // const session = await getSession(username!);
-      // if (!session) navigate("/login");
-    }
-    checkForSession();
-  }, []);
+  const { username } = useParams<{username: string}>();
+    const { imageUrl } = useUserStore();
+    const {fetchUserData} = useUserService();
+    useEffect(() => {
+      const token = localStorage.getItem("auth_access_token");
+      fetchUserData(username!);
+      if (!token && !imageUrl) navigate("/login");
+    }, [])
   return (
     <main className="px-3 py-2 font-poppins w-screen h-screen">
       <img src={Logo} className="w-36 h-10" />

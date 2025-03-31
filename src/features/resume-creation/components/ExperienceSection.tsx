@@ -102,7 +102,7 @@ export const ExperienceSection: React.FC = () => {
           exit={{
             x: -200,
           }}
-          className={`flex flex-col gap-y-5 w-[80%] lg:w-[90%] h-[60%] font-poppins px-5 py-5 lg:m-10`}
+          className={`flex flex-col max-md:text-xs gap-y-5 w-[80%] lg:w-[90%] h-[60%] font-poppins px-5 py-5 lg:m-10`}
         >
           <h1 className="lg:text-2xl text-lg font-semibold">
             Experience Information
@@ -111,7 +111,7 @@ export const ExperienceSection: React.FC = () => {
             return (
               <div
                 key={element.id}
-                className="flex flex-col lg:grid lg:grid-rows-3 lg:grid-cols-2 mt-3 gap-5"
+                className="flex flex-col lg:grid lg:grid-rows-3 lg:grid-cols-2 max-md:gap-5"
               >
                 <FormTextField
                   name={"jobName"}
@@ -209,7 +209,7 @@ export const ExperienceSection: React.FC = () => {
                   <textarea
                     maxLength={200}
                     onChange={(e) => changeEventHandler(e, index)}
-                    className="border border-zinc-400 rounded-lg px-3 py-2 resize-none"
+                    className="border border-zinc-400 max-md:max-w-[250px] rounded-lg px-3 py-2 resize-none"
                     placeholder="Your contribution in the company..."
                     value={
                       experiences.find((item) => item.id === element.id)
@@ -241,7 +241,7 @@ export const ExperienceSection: React.FC = () => {
               onPressed={() => {
                 addExperiences(formData);
               }}
-              text="Save"
+              text="Save Experiences"
             />
           </div>
           <div className="flex justify-end gap-x-2 mt-3">

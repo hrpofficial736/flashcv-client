@@ -5,7 +5,6 @@ import { useContactInfoStore } from "../../../../stores/useContactInfoStore";
 const socialsStyles = StyleSheet.create({
   view: {
     width: 180,
-    height: 100,
     display: "flex",
     flexDirection: "column",
   },

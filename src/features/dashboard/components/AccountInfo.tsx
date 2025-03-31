@@ -49,6 +49,7 @@ export const AccountInfo: React.FC = () => {
             localStorage.removeItem("twitter_oauth_state");
             localStorage.removeItem("twitter_code_verifier");
             localStorage.removeItem("auth_access_token");
+            localStorage.removeItem("username");
             navigate("/login");
           }}
           className={`font-poppins cursor-pointer px-2 py-2 hover:bg-orange-100 transition-colors duration-200 text-orange-400 rounded-xl bg-white row-center-flex gap-x-3`}
@@ -59,7 +60,7 @@ export const AccountInfo: React.FC = () => {
       </div>
 
       <div className="column-center-flex">
-        {avatar && name && email && resumeCount ? (
+        {avatar && name.length > 0 && email.length > 0 ? (
           <>
             <img
               src={avatar}

@@ -9,10 +9,12 @@ export interface UniversalButtonProps {
 export const UniversalButton: React.FC<UniversalButtonProps> = ({
   text,
   icon,
+  onPressed
 }) => {
   return (
     <button
-      className="mt-5 cursor-pointer px-3 py-2 rounded-lg row-center-flex gap-x-3 bg-orange-300 border border-black hover:bg-white/60 transition-colors duration-200 text-black font-medium font-poppins"
+    onClick={onPressed}
+      className="cursor-pointer px-3 py-2 rounded-lg row-center-flex gap-x-3 bg-orange-300 border border-black hover:bg-white/60 transition-colors duration-200 text-black font-medium font-poppins"
     >
       {icon && <div>{icon}</div>}
       {text}

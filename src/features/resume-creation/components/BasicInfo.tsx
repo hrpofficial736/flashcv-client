@@ -9,10 +9,12 @@ import { GenerateWithAIButton } from "./common/GenerateWithAI";
 import { AnimatePresence, motion } from "motion/react";
 import { useResumeSectionIndexStore } from "../../../stores/useResumeSectionIndexStore";
 import { useBasicInfoStore } from "../../../stores/useBasicInfoStore";
+import { useNavigate } from "react-router";
 
 export const BasicInfo: React.FC = () => {
   const { currentIndex, incrementCurrentIndex } = useResumeSectionIndexStore();
   const {info, addInfo} = useBasicInfoStore();
+  const navigate = useNavigate();
   const [display, setDisplay] = useState<boolean>(true);
   const [formData, setFormData] = useState<BasicInfoInterface>({
     fullName: "",
@@ -133,7 +135,9 @@ export const BasicInfo: React.FC = () => {
             ))}
           </div>
           <div className="flex max-lg:flex-col max-lg:gap-y-4 justify-center lg:justify-end gap-x-2 mt-3">
-            <SecondaryButton text="Skip to Dashboard" />
+            <SecondaryButton onPressed={() => {
+              navigate(`/${localStorage.getItem("username")}/dashboard`);
+            }} text="Skip to Dashboard" />
             <ProceedButton icon={<FaRegArrowAltCircleRight />} text="Proceed" />
           </div>
         </motion.form>

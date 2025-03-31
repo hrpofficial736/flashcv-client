@@ -3,7 +3,6 @@ import { ResumeComponent } from "./ResumeComponent";
 import { FaPlus } from "react-icons/fa6";
 import { useUserStore } from "../../../stores/useUserStore";
 import { useNavigate, useParams } from "react-router";
-import { Loader } from "../../../components/Loader";
 
 export const MyResumes: React.FC = () => {
   const resumes = useUserStore((state) => state.resumes);
@@ -13,7 +12,14 @@ export const MyResumes: React.FC = () => {
     window.innerWidth < 400
   );
 
+
+
   useEffect(() => {
+    console.log(resumes);
+  }, [resumes])
+
+  useEffect(() => {
+    
     const handleResize = () => {
       setResponsive(window.innerWidth < 400);
     };
@@ -45,7 +51,7 @@ export const MyResumes: React.FC = () => {
           </button>
         )}
       </div>
-      {resumes?.length! > 0 ? (
+      {resumes!.length > 0 ? (
         <div className="flex flex-col gap-y-2 overflow-y-scroll no-scrollbar">
           {resumes?.map((resume, index) => {
             return (
@@ -58,7 +64,7 @@ export const MyResumes: React.FC = () => {
           })}
         </div>
       ) : (
-        <Loader />
+        <p className="text-center m-auto">No resumes created!</p>
       )}
       {responsive && (
         <button

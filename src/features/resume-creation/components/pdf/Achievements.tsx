@@ -5,7 +5,6 @@ import { useAchievementsStore } from "../../../../stores/useAchievementsStore";
 const achievementsStyles = StyleSheet.create({
   view: {
     width: 180,
-    height: 290,
     display: "flex",
     flexDirection: "column",
   },

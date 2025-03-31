@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   FormTextField,
   FormButton,
@@ -8,11 +8,15 @@ import {
 import { Link } from "react-router";
 import { FaXTwitter } from "react-icons/fa6";
 import { useNavigate } from "react-router";
-// import useSupabaseAuth from "../hooks/useSupabaseAuth";
+import { useAuthService } from "../services/authService";
+import { useUserStore } from "../../../stores/useUserStore";
+import { Loader } from "../../../components/Loader";
 
-export const RegisterComponent: React.FC = () => {
+export const RegisterComponent: React.FC<{callback: () => void;}> = ({callback} ) => {
   const navigate = useNavigate();
-  // const { registerWithEmailPassword } = useSupabaseAuth();
+  const [showLoader, setShowLoader] = useState<boolean>(false);
+  const username = useUserStore((state) => state.username);
+  const { registerService } = useAuthService();
   const [formData, setFormData] = useState<{
     name: string;
     email: string;
@@ -23,6 +27,10 @@ export const RegisterComponent: React.FC = () => {
     password: "",
   });
 
+  useEffect(() => {
+    if (username) navigate(`/${username}/build-resume`);
+  }, [username])
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setFormData((prevData) => {
       return {
@@ -31,6 +39,8 @@ export const RegisterComponent: React.FC = () => {
       };
     });
   return (
+    <>
+    {!showLoader ?
     <section className="lg:w-[60%] w-[90%] mx-auto h-[90%] lg:h-full column-center-flex">
       <div className="lg:px-7 lg:py-3 px-3 py-3 flex flex-col lg:w-[60%] gap-y-3 lg:gap-y-5">
         <div className="flex flex-col items-start gap-y-2">
@@ -62,12 +72,9 @@ export const RegisterComponent: React.FC = () => {
         <form
           onSubmit={async (e) => {
             e.preventDefault();
-            // const responseFromSupabaseAuth =
-            //   await registerWithEmailPassword(formData);
-            // if (responseFromSupabaseAuth)
-            //   navigate("/auth/callback", {
-            //     state: { type: "register", provider: "" },
-            //   });
+            callback();
+            setShowLoader(true);
+            await registerService(formData);
           }}
           className="flex flex-col gap-y-4"
         >
@@ -114,5 +121,8 @@ export const RegisterComponent: React.FC = () => {
         </div>
       </div>
     </section>
+    : <div className="w-screen h-screen row-center-flex"><Loader /></div>
+}
+    </>
   );
 };

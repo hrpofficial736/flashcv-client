@@ -1,4 +1,3 @@
-import { LoginUser, NewUser } from "../exports/interfaces/exports";
 import {generateCodeChallenge, generateCodeVerifier} from "../../../utils/helpers/authCodeHelpers";
 
 export default function useCustomAuth() {
@@ -36,35 +35,6 @@ export default function useCustomAuth() {
     }
   };
 
-  // const logInWithEmailPassword = async (
-  //   userInfo: LoginUser
-  // ): Promise<boolean> => {
-  //   const response = await signIn?.create({
-  //     identifier: userInfo.email,
-  //     password: userInfo.password,
-  //   });
-  //   console.log(response);
-
-  //   return true;
-  // };
-
-  // const registerWithEmailPassword = async (
-  //   userInfo: NewUser
-  // ): Promise<boolean> => {
-  //   const response = await signUp?.create({
-  //     emailAddress: userInfo.email,
-  //     firstName: userInfo.name.split(" ")[0],
-  //     lastName: userInfo.name.split(" ")[1],
-  //     password: userInfo.password,
-  //   });
-  //   console.log(response);
-
-  //   return true;
-  // };
-
-  // const logOut = async () => {
-  //   await signOut();
-  // };
 
   return {
     signInWithProvider,

@@ -90,7 +90,7 @@ export const Achievements: React.FC = () => {
                 onPressed={() => {
                   addAchievements(formData);
                 }}
-                text="Save"
+                text="Save Achievements"
               />
             </div>
     </section>
