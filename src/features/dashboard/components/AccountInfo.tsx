@@ -24,7 +24,6 @@ export const AccountInfo: React.FC = () => {
   }, [window.innerWidth])
   useEffect(() => {
     if (highQualityAvatarUrl) {
-      console.log(highQualityAvatarUrl);
       
       setAvatar(getAvatar(highQualityAvatarUrl));
     }

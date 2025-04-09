@@ -8,7 +8,6 @@ import {
   RegisterPage,
   ResumePage,
 } from "./exports/pages/exports";
-import { Main } from "./features/resume-creation/components/pdf/Main";
 import { SaveAndDownload } from "./features/resume-creation/components/SaveAndDownload";
 
 const App: React.FC = () => {
@@ -21,7 +20,6 @@ const App: React.FC = () => {
       <Route element={<Processor provider="twitter" />} path="/auth/callback/twitter" />
       <Route element={<DashboardPage />} path="/:username/dashboard" />
       <Route element={<ResumePage />} path="/:username/build-resume" />
-      <Route element={<Main />} path="/test" />
       <Route element={<SaveAndDownload />} path="/preview" />
     </Routes>
   );

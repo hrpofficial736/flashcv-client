@@ -30,6 +30,8 @@ const ResumePage: React.FC = () => {
     const {fetchUserData} = useUserService();
     useEffect(() => {
       const token = localStorage.getItem("auth_access_token");
+      console.log(token);
+      
       fetchUserData(username!);
       if (!token && !imageUrl) navigate("/login");
     }, [])

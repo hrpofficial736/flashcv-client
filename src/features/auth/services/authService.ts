@@ -22,7 +22,7 @@ async function loginService(userInfo: LoginUser) {
     useUserStore.getState().updateUser(responseFromServer.data.data);
     return true;
   } catch (error) {
-    console.log("error is : ", error);
+    return false;
   }
 }
 
@@ -32,7 +32,6 @@ async function registerService(userInfo: NewUser) {
       `${import.meta.env.VITE_SERVER_URI}/auth/register`,
       userInfo,
     );
-    console.log(responseFromServer);
     localStorage.setItem("username", responseFromServer.data.data.username);
     useUserStore.getState().updateUser(responseFromServer.data.data);
     localStorage.setItem("auth_access_token", responseFromServer.data.data.accessToken);
@@ -45,16 +44,18 @@ async function registerService(userInfo: NewUser) {
 async function signInWithProviderService(provider: string, token: string) {
   
   const responseFromServer = await api.post(
-    `${import.meta.env.VITE_SERVER_URI}/auth/signIn/${provider}`,
+    `${import.meta.env.VITE_SERVER_URI}/auth/signIn`,
     {codeVerifier: localStorage.getItem("twitter_code_verifier")},
     {
       headers: {
         Authorization: `Bearer ${token}`,
+        'x-auth-type': 'oauth',
+        'x-auth-provider': provider
       },
     },
   );
-  console.log(responseFromServer.data.data);
   localStorage.setItem("username", responseFromServer.data.data.username);
+  localStorage.setItem("auth_access_token", responseFromServer.data.data.auth_access_token)
   useUserStore.getState().updateUser(responseFromServer.data.data);
   return responseFromServer.data.data;
 }

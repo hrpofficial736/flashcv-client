@@ -72,6 +72,7 @@ export const RegisterComponent: React.FC<{callback: () => void;}> = ({callback} 
         <form
           onSubmit={async (e) => {
             e.preventDefault();
+            localStorage.setItem("type", "jwt");
             callback();
             setShowLoader(true);
             await registerService(formData);

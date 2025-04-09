@@ -13,11 +13,6 @@ export const MyResumes: React.FC = () => {
   );
 
 
-
-  useEffect(() => {
-    console.log(resumes);
-  }, [resumes])
-
   useEffect(() => {
     
     const handleResize = () => {

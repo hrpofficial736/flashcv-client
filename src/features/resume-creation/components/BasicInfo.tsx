@@ -77,12 +77,10 @@ export const BasicInfo: React.FC = () => {
     },
   ];
   useEffect(() => {
-    console.log("in basic info, index: ", currentIndex);
     if (currentIndex !== 0) {
       setDisplay(false);
     }
     return () => {
-      console.log("Unmounted");
     };
   }, [currentIndex]);
 

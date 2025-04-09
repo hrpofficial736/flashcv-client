@@ -27,7 +27,6 @@ export const LoginPage: React.FC = () => {
     const username = localStorage.getItem("username");
     if (username) fetchUserData(username!);
     if (token && username) {
-      console.log(token, username, resumeCount);
       
       resumeCount! > 0
       ? navigate(`/${username}/dashboard`)

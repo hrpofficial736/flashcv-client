@@ -25,7 +25,8 @@ export const RegisterPage: React.FC = () => {
   const { fetchUserData } = useUserService();
   useEffect(() => {
     const token = localStorage.getItem("auth_access_token");
-    if (username) fetchUserData(username);
+    
+    if (username && token !== null) fetchUserData(username);
     if (token && imageUrl && username) navigate(`/${username}/dashboard`);
   }, []);
   return (
