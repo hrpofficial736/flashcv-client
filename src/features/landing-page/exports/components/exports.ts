@@ -4,4 +4,4 @@ import { HowItWorks } from "../../components/HowItWorks";
 import { CallToAction } from "../../components/CallToAction";
 import { Footer } from "../../components/Footer";
 
-export { Hero, Features, HowItWorks, CallToAction, Footer };
+export { Hero, Footer, Features, HowItWorks, CallToAction };

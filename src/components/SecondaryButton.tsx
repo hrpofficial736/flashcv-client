@@ -9,7 +9,7 @@ export const SecondaryButton: React.FC<UniversalButtonProps> = ({
     <button
       type="submit"
       onClick={() => onPressed!()}
-      className="bg-zinc-100 cursor-pointer hover:bg-zinc-200 transition-colors duration-200 border border-black text-black font-semibold px-3 py-2 rounded-xl row-center-flex gap-x-2"
+      className="bg-white shadow-sm ring ring-zinc-400 cursor-pointer hover:bg-zinc-200 transition-colors duration-200 text-black/90 font-semibold px-7 py-2 rounded-3xl row-center-flex gap-x-2"
     >
       {icon}
       {text}

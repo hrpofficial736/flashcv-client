@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  Resume1,
-  Resume2,
-  Resume3,
-  Resume4,
-} from "../../../exports/assets/exports";
+
 import { motion } from "motion/react";
 
 export const ImageSection: React.FC = () => {
@@ -26,13 +21,13 @@ export const ImageSection: React.FC = () => {
           }}
           className="flex h-[200%] w-full flex-col absolute"
         >
-          <img src={Resume1} className="w-60" />
+          {/* <img src={Resume1} className="w-60" />
           <img src={Resume2} className="w-60" />
           <img src={Resume3} className="w-60" />
 
           <img src={Resume1} className="w-60" />
           <img src={Resume2} className="w-60" />
-          <img src={Resume3} className="w-60" />
+          <img src={Resume3} className="w-60" /> */}
         </motion.div>
       </div>
 
@@ -47,13 +42,13 @@ export const ImageSection: React.FC = () => {
           }}
           className="flex h-[100%] w-full flex-col absolute"
         >
-          <img src={Resume3} className="w-60" />
+          {/* <img src={Resume3} className="w-60" />
           <img src={Resume4} className="w-60" />
           <img src={Resume2} className="w-60" />
 
           <img src={Resume3} className="w-60" />
           <img src={Resume4} className="w-60" />
-          <img src={Resume2} className="w-60" />
+          <img src={Resume2} className="w-60" /> */}
         </motion.div>
       </div>
         <div className="relative overflow-hidden w-1/3 h-full">
@@ -72,13 +67,13 @@ export const ImageSection: React.FC = () => {
         }}
         className="flex h-[200%] w-full flex-col absolute"
       >
-        <img src={Resume2} className="w-60" />
+        {/* <img src={Resume2} className="w-60" />
         <img src={Resume1} className="w-60" />
         <img src={Resume4} className="w-60" />
 
         <img src={Resume2} className="w-60" />
         <img src={Resume1} className="w-60" />
-        <img src={Resume4} className="w-60" />
+        <img src={Resume4} className="w-60" /> */}
       </motion.div>
       </div>
     </section>

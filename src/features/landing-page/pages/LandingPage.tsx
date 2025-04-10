@@ -2,9 +2,9 @@ import React from "react";
 import {
   Hero,
   Features,
-  HowItWorks,
-  CallToAction,
   Footer,
+  HowItWorks,
+  CallToAction
 } from "../exports/components/exports";
 
 export const LandingPage: React.FC = () => {

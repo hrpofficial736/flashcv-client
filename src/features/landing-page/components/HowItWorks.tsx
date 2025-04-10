@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "motion/react";
 import {
-  Info, Magic, Preview, Download
+  Form, Magic, Preview, Download
 } from "../exports/assets/exports";
 import { WorkingGridTile } from "./WorkingGridTile";
 
@@ -23,7 +23,7 @@ export const HowItWorks: React.FC = () => {
         duration: 2,
         type: "spring",
       }}
-      className="w-full px-3 py-3 lg:px-10 lg:py-5 mt-10 lg:mt-20 bg-white/40 lg:h-[650px] rounded-2xl column-center-flex gap-y-2 lg:gap-y-3"
+      className="w-full px-3 py-3 lg:px-10 lg:py-5 mt-10 mb-10 lg:mt-20 bg-white/40 lg:h-[650px] rounded-2xl column-center-flex gap-y-2 lg:gap-y-3"
     >
       <h1 className="text-center text-2xl font-poppins text-black lg:text-4xl font-semibold">
         How It Works
@@ -34,7 +34,7 @@ export const HowItWorks: React.FC = () => {
       </h1>
       <div className="w-[90%] lg:w-[60%] lg:h-[90%] lg:gap-5 flex flex-col lg:flex-row gap-y-4 lg:grid grid-rows-2 grid-cols-2">
         <WorkingGridTile
-          image={Info}
+          image={Form}
           text="Step 1: Enter Your Details"
           caption="Manual input or AI-assisted auto-fill suggestions."
         />
