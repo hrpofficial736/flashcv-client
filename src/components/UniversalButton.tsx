@@ -14,7 +14,7 @@ export const UniversalButton: React.FC<UniversalButtonProps> = ({
   return (
     <button
     onClick={onPressed}
-      className="cursor-pointer px-3 py-2 rounded-2xl row-center-flex gap-x-3 bg-orange-400 hover:bg-white/60 text-white font-semibold transition-colors duration-200"
+      className="cursor-pointer max-w-[200px] max-h-10 px-3 py-2 rounded-2xl row-center-flex gap-x-3 bg-orange-400 hover:bg-orange-300 text-white font-semibold transition-colors duration-200"
     >
       {icon && <div>{icon}</div>}
       {text}

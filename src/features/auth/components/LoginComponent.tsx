@@ -6,13 +6,16 @@ import {
   GoogleIcon,
   SocialButton,
 } from "../../../exports/components/exports";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { FaXTwitter } from "react-icons/fa6";
 import { useAuthService } from "../services/authService";
 import { Loader } from "../../../components/Loader";
+import { useUserStore } from "../../../stores/useUserStore";
 
 export const LoginComponent: React.FC<{ callback: () => void }> = ({ callback }) => {
   const { loginService } = useAuthService();
+  const { username, resumeCount } = useUserStore();
+  const navigate = useNavigate();
   const [showLoader, setShowLoader] = useState<boolean>(false);
   const [formData, setFormData] = useState<{
     email: string;
@@ -29,10 +32,18 @@ export const LoginComponent: React.FC<{ callback: () => void }> = ({ callback })
       };
     });
 
+    const checkInfo = () => {
+      if (username)
+        resumeCount! > 0
+          ? navigate(`/${username}/dashboard`)
+          : navigate(`/${username}/build-resume`);
+      return;
+    }
+    
   return (
     <>
     {!showLoader ?
-    <section className="lg:w-[60%] w-[90%] mx-auto h-[90%] column-center-flex">
+    <section className="lg:w-[70%] mx-auto h-[100%] column-center-flex">
       <div className="lg:px-7 lg:py-3 px-3 py-3 flex flex-col lg:w-[60%] gap-y-5">
         <div>
           <h1 className="lg:text-4xl text-3xl font-poppins font-bold">
@@ -56,9 +67,9 @@ export const LoginComponent: React.FC<{ callback: () => void }> = ({ callback })
           />
         </div>
         <div className="flex items-center justify-center gap-x-2 font-poppins font-light text-xs">
-          <div className="bg-zinc-200 w-[30%] h-[1px]"></div>
+          <div className="bg-zinc-200 w-[30%] max-w-[30%] h-[1px]"></div>
           <p>or continue with</p>
-          <div className="bg-zinc-200 w-[30%] h-[1px]"></div>
+          <div className="bg-zinc-200 w-[30%] max-w-[30%] h-[1px]"></div>
         </div>
         <form
           onSubmit={async (e) => {
@@ -66,7 +77,13 @@ export const LoginComponent: React.FC<{ callback: () => void }> = ({ callback })
             localStorage.setItem('type', 'jwt');
             callback();
             setShowLoader(true);
-            await loginService(formData);
+            const response = await loginService(formData);
+            if (response) {
+              checkInfo();
+              return;
+            }
+            setShowLoader(false);
+            alert("Invalid Login!");
           }}
           className="flex flex-col gap-y-4"
         >

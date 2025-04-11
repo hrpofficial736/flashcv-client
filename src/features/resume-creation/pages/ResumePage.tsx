@@ -30,10 +30,9 @@ const ResumePage: React.FC = () => {
     const {fetchUserData} = useUserService();
     useEffect(() => {
       const token = localStorage.getItem("auth_access_token");
-      console.log(token);
-      
+      if (!token) navigate("/login");
       fetchUserData(username!);
-      if (!token && !imageUrl) navigate("/login");
+      if (!imageUrl) navigate("/login");
     }, [])
   return (
     <main className="px-3 py-2 font-poppins w-screen h-screen">

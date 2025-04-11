@@ -12,13 +12,10 @@ async function loginService(userInfo: LoginUser) {
     const responseFromServer = await api.post(
       `${import.meta.env.VITE_SERVER_URI}/auth/login`,
       userInfo,
-      {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem("auth_access_token")}`
-        }
-      }
     );
+    
     localStorage.setItem("username", responseFromServer.data.data.username);
+    localStorage.setItem("auth_access_token", responseFromServer.data.data.accessToken);
     useUserStore.getState().updateUser(responseFromServer.data.data);
     return true;
   } catch (error) {

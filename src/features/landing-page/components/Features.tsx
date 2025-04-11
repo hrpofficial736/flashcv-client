@@ -26,9 +26,9 @@ export const Features: React.FC = () => {
         duration: 2,
         type: "spring",
       }}
-      className="w-full px-3 py-2 lg:px-10 lg:py-5 mt-10 bg-white/40 lg:h-[550px] rounded-2xl column-center-flex gap-y-5"
+      className="w-full px-3 py-2 lg:px-10 lg:py-5 bg-white/40 lg:h-[550px] rounded-2xl column-center-flex"
     >
-      <h1 className="text-center text-2xl font-poppins text-black lg:text-4xl font-semibold">
+      <h1 className="text-center text-2xl mb-2 font-poppins text-black lg:text-4xl font-semibold">
         Why FlashCV?
       </h1>
 
@@ -38,7 +38,7 @@ export const Features: React.FC = () => {
         instant PDF downloads – ensuring you create a job-winning resume in
         minutes!
       </p>
-      <div className="column-center-flex gap-y-3 p-3">
+      <div className="flex flex-col mt-5 justify-center items-center gap-y-3 p-3 md:grid md:grid-rows-2 md:grid-cols-2">
         <FeaturesTile
           image={AIImage}
           text="AI Powered suggestions"

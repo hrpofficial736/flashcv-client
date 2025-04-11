@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
-import { Logo } from "../../../exports/assets/exports";
 import { MyResumes } from "../components/MyResumes";
 import { AccountInfo } from "../components/AccountInfo";
 import { useNavigate, useParams } from "react-router";
 import useUserService from "../services/useUserService";
 import { useUserStore } from "../../../stores/useUserStore";
+import Logo from "../../../components/Logo";
 
 export const DashboardPage: React.FC = () => {
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ export const DashboardPage: React.FC = () => {
   }, [])
   return (
     <div className="md:px-3 px-3 py-2 w-screen h-screen">
-      <img src={Logo} className={`w-[200px] h-[130px]`} />
+      <Logo />
       <section className="h-[70%] mt-10 md:mx-10 md:px-3 py-3">
         <h1 className="font-poppins text-2xl md:text-3xl font-semibold">
           Dashboard

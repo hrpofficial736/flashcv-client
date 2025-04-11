@@ -23,16 +23,16 @@ export const HowItWorks: React.FC = () => {
         duration: 2,
         type: "spring",
       }}
-      className="w-full px-3 py-3 lg:px-10 lg:py-5 mt-10 mb-10 lg:mt-20 bg-white/40 lg:h-[650px] rounded-2xl column-center-flex gap-y-2 lg:gap-y-3"
+      className="w-full mt-20 mb-20 rounded-2xl column-center-flex"
     >
-      <h1 className="text-center text-2xl font-poppins text-black lg:text-4xl font-semibold">
+      <h1 className="text-center text-2xl mb-2 font-poppins text-black lg:text-4xl font-semibold">
         How It Works
       </h1>
-      <h1 className="text-center px-2 py-2 text-sm lg:w-[800px] font-poppins text-black/60 lg:text-base font-medium">
+      <h1 className="text-center text-sm lg:w-[800px] font-poppins text-black/60 lg:text-base font-medium">
         Creating a standout resume has never been easier! Follow these simple
         steps and let FlashCV generate a job-winning resume for you in minutes.
       </h1>
-      <div className="w-[90%] lg:w-[60%] lg:h-[90%] lg:gap-5 flex flex-col lg:flex-row gap-y-4 lg:grid grid-rows-2 grid-cols-2">
+      <div className="w-[90%] mt-5 lg:w-[60%] lg:h-[90%] lg:gap-5 flex flex-col lg:flex-row gap-y-4 lg:grid grid-rows-2 grid-cols-2">
         <WorkingGridTile
           image={Form}
           text="Step 1: Enter Your Details"

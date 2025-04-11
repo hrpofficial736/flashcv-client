@@ -23,7 +23,6 @@ export const Processor: React.FC<{ provider: string }> = ({ provider }) => {
       if (!secretFromProvider) throw new Error("Token not found!");
       removeHashFromUrl();
      const responseFromService = await signInWithProviderService(provider!, secretFromProvider);
-     console.log(responseFromService);
      
      if (responseFromService.accessToken) localStorage.setItem("auth_access_token", responseFromService.accessToken);
     };
@@ -31,7 +30,6 @@ export const Processor: React.FC<{ provider: string }> = ({ provider }) => {
   }, []);
 
   useEffect(() => {
-    console.log(resumeCount, username);
     if (username) {
     if (resumeCount! > 0 && username) {
       navigate(`/${username}/dashboard`);

@@ -21,7 +21,6 @@ async function fetchUserData (username: string) {
             
           },
           withCredentials: true,
-          
         },
       );
 
@@ -29,6 +28,5 @@ async function fetchUserData (username: string) {
       useUserStore.getState().updateUser(response.data.data);
     } catch (error) {
       console.log(error);
-      
     }
 }
