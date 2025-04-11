@@ -1,6 +1,5 @@
 import React, { ReactElement, useEffect } from "react";
 import { useNavigate, useParams } from "react-router";
-import { Logo } from "../../../exports/assets/exports";
 import {
   BasicInfo,
   Timeline,
@@ -13,6 +12,7 @@ import {
 import { useResumeSectionIndexStore } from "../../../stores/useResumeSectionIndexStore";
 import { useUserStore } from "../../../stores/useUserStore";
 import useUserService from "../../dashboard/services/useUserService";
+import Logo from "../../../components/Logo";
 
 const ResumePage: React.FC = () => {
   const navigate = useNavigate();
@@ -36,7 +36,7 @@ const ResumePage: React.FC = () => {
     }, [])
   return (
     <main className="px-3 py-2 font-poppins w-screen h-screen">
-      <img src={Logo} className="w-36 h-10" />
+      <Logo />
       <div className="lg:px-10 lg:py-5 mt-5">
         <h1 className="lg:text-4xl text-xl font-bold">
           Let's build your resume!
